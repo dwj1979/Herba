@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>learn Resources</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style type="text/css">
+        .jack{
+            background: red;
+            height: 100px;
+        }
+    </style>
+        </head>
+<body>
+
+
+<h1>欢迎来到我的网站</h1>
+<div class="jack"></div>
+<form th:action="@{/logout}" method="post">
+    <input  value="注销" type="submit"/>
+</form>
+
+
+</body>
+</html>
