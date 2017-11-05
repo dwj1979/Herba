@@ -1,115 +1,123 @@
 package org.herba.model.entity;
 
-import lombok.Data;
-
-@Data
 public class Users {
-  private Long uid;
-  private String name;
-  private String password;
-  private String mail;
-  private String url;
-  private String screenname;
-  private Long created;
-  private Long activated;
-  private String role;
-  private Long logged;
-  private String group;
-  private String authcode;
+    private Integer uid;
 
-    public Long getUid() {
+    private String name;
+
+    private String password;
+
+    private String mail;
+
+    private String url;
+
+    private String screenName;
+
+    private Integer created;
+
+    private Integer activated;
+
+    private Integer logged;
+
+    private String group;
+
+    private String authCode;
+
+    private String role;
+
+    public Integer getUid() {
         return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public String getScreenname() {
-        return screenname;
-    }
-
-    public Long getCreated() {
-        return created;
-    }
-
-    public Long getActivated() {
-        return activated;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public Long getLogged() {
-        return logged;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public String getAuthcode() {
-        return authcode;
-    }
-
-    public void setUid(Long uid) {
-        this.uid = uid;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
     }
 
-    public void setScreenname(String screenname) {
-        this.screenname = screenname;
+    public String getScreenName() {
+        return screenName;
     }
 
-    public void setCreated(Long created) {
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
+
+    public Integer getCreated() {
+        return created;
+    }
+
+    public void setCreated(Integer created) {
         this.created = created;
     }
 
-    public void setActivated(Long activated) {
+    public Integer getActivated() {
+        return activated;
+    }
+
+    public void setActivated(Integer activated) {
         this.activated = activated;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public Integer getLogged() {
+        return logged;
     }
 
-    public void setLogged(Long logged) {
+    public void setLogged(Integer logged) {
         this.logged = logged;
+    }
+
+    public String getGroup() {
+        return group;
     }
 
     public void setGroup(String group) {
         this.group = group;
     }
 
-    public void setAuthcode(String authcode) {
-        this.authcode = authcode;
+    public String getAuthCode() {
+        return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -1,12 +1,13 @@
 package org.herba.model.entity;
 
-import lombok.Data;
+public class Options extends OptionsKey {
+    private String value;
 
-@Data
-public class Options {
-  private String name;
-  private Long user;
-  private String value;
+    public String getValue() {
+        return value;
+    }
 
-
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
