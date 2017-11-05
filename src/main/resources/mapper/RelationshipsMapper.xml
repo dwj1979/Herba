@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.herba.model.mapper.RelationshipsMapper" >
+  <resultMap id="BaseResultMap" type="org.herba.model.entity.RelationshipsKey" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <id column="mid" property="mid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="org.herba.model.entity.RelationshipsKey" >
+    delete from relationships
+    where cid = #{cid,jdbcType=INTEGER}
+      and mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.herba.model.entity.RelationshipsKey" >
+    insert into relationships (cid, mid)
+    values (#{cid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.herba.model.entity.RelationshipsKey" >
+    insert into relationships
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

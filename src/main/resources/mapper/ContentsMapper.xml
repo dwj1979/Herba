@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.herba.model.mapper.ContentsMapper" >
+  <resultMap id="BaseResultMap" type="org.herba.model.entity.Contents" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="slug" property="slug" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="INTEGER" />
+    <result column="modified" property="modified" jdbcType="INTEGER" />
+    <result column="order" property="order" jdbcType="INTEGER" />
+    <result column="authorId" property="authorId" jdbcType="INTEGER" />
+    <result column="template" property="template" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="commentsNum" property="commentsNum" jdbcType="INTEGER" />
+    <result column="allowComment" property="allowComment" jdbcType="CHAR" />
+    <result column="allowPing" property="allowPing" jdbcType="CHAR" />
+    <result column="allowFeed" property="allowFeed" jdbcType="CHAR" />
+    <result column="parent" property="parent" jdbcType="INTEGER" />
+    <result column="viewsNum" property="viewsNum" jdbcType="INTEGER" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.herba.model.entity.Contents" extends="BaseResultMap" >
+    <result column="text" property="text" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, title, slug, created, modified, order, authorId, template, type, status, password, 
+    commentsNum, allowComment, allowPing, allowFeed, parent, viewsNum, views
+  </sql>
+  <sql id="Blob_Column_List" >
+    text
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contents
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contents
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.herba.model.entity.Contents" >
+    insert into contents (cid, title, slug, 
+      created, modified, order, 
+      authorId, template, type, 
+      status, password, commentsNum, 
+      allowComment, allowPing, allowFeed, 
+      parent, viewsNum, views, 
+      text)
+    values (#{cid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR}, 
+      #{created,jdbcType=INTEGER}, #{modified,jdbcType=INTEGER}, #{order,jdbcType=INTEGER}, 
+      #{authorId,jdbcType=INTEGER}, #{template,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{commentsNum,jdbcType=INTEGER}, 
+      #{allowComment,jdbcType=CHAR}, #{allowPing,jdbcType=CHAR}, #{allowFeed,jdbcType=CHAR}, 
+      #{parent,jdbcType=INTEGER}, #{viewsNum,jdbcType=INTEGER}, #{views,jdbcType=INTEGER}, 
+      #{text,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.herba.model.entity.Contents" >
+    insert into contents
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="slug != null" >
+        slug,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="modified != null" >
+        modified,
+      </if>
+      <if test="order != null" >
+        order,
+      </if>
+      <if test="authorId != null" >
+        authorId,
+      </if>
+      <if test="template != null" >
+        template,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="commentsNum != null" >
+        commentsNum,
+      </if>
+      <if test="allowComment != null" >
+        allowComment,
+      </if>
+      <if test="allowPing != null" >
+        allowPing,
+      </if>
+      <if test="allowFeed != null" >
+        allowFeed,
+      </if>
+      <if test="parent != null" >
+        parent,
+      </if>
+      <if test="viewsNum != null" >
+        viewsNum,
+      </if>
+      <if test="views != null" >
+        views,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="slug != null" >
+        #{slug,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=INTEGER},
+      </if>
+      <if test="modified != null" >
+        #{modified,jdbcType=INTEGER},
+      </if>
+      <if test="order != null" >
+        #{order,jdbcType=INTEGER},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="template != null" >
+        #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsNum != null" >
+        #{commentsNum,jdbcType=INTEGER},
+      </if>
+      <if test="allowComment != null" >
+        #{allowComment,jdbcType=CHAR},
+      </if>
+      <if test="allowPing != null" >
+        #{allowPing,jdbcType=CHAR},
+      </if>
+      <if test="allowFeed != null" >
+        #{allowFeed,jdbcType=CHAR},
+      </if>
+      <if test="parent != null" >
+        #{parent,jdbcType=INTEGER},
+      </if>
+      <if test="viewsNum != null" >
+        #{viewsNum,jdbcType=INTEGER},
+      </if>
+      <if test="views != null" >
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.herba.model.entity.Contents" >
+    update contents
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="slug != null" >
+        slug = #{slug,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=INTEGER},
+      </if>
+      <if test="modified != null" >
+        modified = #{modified,jdbcType=INTEGER},
+      </if>
+      <if test="order != null" >
+        order = #{order,jdbcType=INTEGER},
+      </if>
+      <if test="authorId != null" >
+        authorId = #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="template != null" >
+        template = #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsNum != null" >
+        commentsNum = #{commentsNum,jdbcType=INTEGER},
+      </if>
+      <if test="allowComment != null" >
+        allowComment = #{allowComment,jdbcType=CHAR},
+      </if>
+      <if test="allowPing != null" >
+        allowPing = #{allowPing,jdbcType=CHAR},
+      </if>
+      <if test="allowFeed != null" >
+        allowFeed = #{allowFeed,jdbcType=CHAR},
+      </if>
+      <if test="parent != null" >
+        parent = #{parent,jdbcType=INTEGER},
+      </if>
+      <if test="viewsNum != null" >
+        viewsNum = #{viewsNum,jdbcType=INTEGER},
+      </if>
+      <if test="views != null" >
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.herba.model.entity.Contents" >
+    update contents
+    set title = #{title,jdbcType=VARCHAR},
+      slug = #{slug,jdbcType=VARCHAR},
+      created = #{created,jdbcType=INTEGER},
+      modified = #{modified,jdbcType=INTEGER},
+      order = #{order,jdbcType=INTEGER},
+      authorId = #{authorId,jdbcType=INTEGER},
+      template = #{template,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      commentsNum = #{commentsNum,jdbcType=INTEGER},
+      allowComment = #{allowComment,jdbcType=CHAR},
+      allowPing = #{allowPing,jdbcType=CHAR},
+      allowFeed = #{allowFeed,jdbcType=CHAR},
+      parent = #{parent,jdbcType=INTEGER},
+      viewsNum = #{viewsNum,jdbcType=INTEGER},
+      views = #{views,jdbcType=INTEGER},
+      text = #{text,jdbcType=LONGVARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.herba.model.entity.Contents" >
+    update contents
+    set title = #{title,jdbcType=VARCHAR},
+      slug = #{slug,jdbcType=VARCHAR},
+      created = #{created,jdbcType=INTEGER},
+      modified = #{modified,jdbcType=INTEGER},
+      order = #{order,jdbcType=INTEGER},
+      authorId = #{authorId,jdbcType=INTEGER},
+      template = #{template,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      commentsNum = #{commentsNum,jdbcType=INTEGER},
+      allowComment = #{allowComment,jdbcType=CHAR},
+      allowPing = #{allowPing,jdbcType=CHAR},
+      allowFeed = #{allowFeed,jdbcType=CHAR},
+      parent = #{parent,jdbcType=INTEGER},
+      viewsNum = #{viewsNum,jdbcType=INTEGER},
+      views = #{views,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

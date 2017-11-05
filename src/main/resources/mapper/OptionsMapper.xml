@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.herba.model.mapper.OptionsMapper" >
+  <resultMap id="BaseResultMap" type="org.herba.model.entity.Options" >
+    <id column="name" property="name" jdbcType="VARCHAR" />
+    <id column="user" property="user" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.herba.model.entity.Options" extends="BaseResultMap" >
+    <result column="value" property="value" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    name, user
+  </sql>
+  <sql id="Blob_Column_List" >
+    value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="org.herba.model.entity.OptionsKey" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from options
+    where name = #{name,jdbcType=VARCHAR}
+      and user = #{user,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="org.herba.model.entity.OptionsKey" >
+    delete from options
+    where name = #{name,jdbcType=VARCHAR}
+      and user = #{user,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.herba.model.entity.Options" >
+    insert into options (name, user, value
+      )
+    values (#{name,jdbcType=VARCHAR}, #{user,jdbcType=INTEGER}, #{value,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.herba.model.entity.Options" >
+    insert into options
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=INTEGER},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.herba.model.entity.Options" >
+    update options
+    <set >
+      <if test="value != null" >
+        value = #{value,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where name = #{name,jdbcType=VARCHAR}
+      and user = #{user,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.herba.model.entity.Options" >
+    update options
+    set value = #{value,jdbcType=LONGVARCHAR}
+    where name = #{name,jdbcType=VARCHAR}
+      and user = #{user,jdbcType=INTEGER}
+  </update>
+</mapper>
