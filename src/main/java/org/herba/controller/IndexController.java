@@ -17,24 +17,19 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
     @Autowired
     ContentService contentService;
+
     @RequestMapping(value = "/index")
-    public ModelAndView index(){
-        ModelAndView modelAndView=new ModelAndView("/index");
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("/index");
         System.out.println("");
         return modelAndView;
     }
+
     @RequestMapping(value = "/login")
-    public ModelAndView login(){
-        ModelAndView modelAndView=new ModelAndView("/login");
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView("/login");
         System.out.println("用户进入登陆界面");
         return modelAndView;
     }
-    @RequestMapping(value = "/api/post/{cid}")
-    @ResponseBody
-    public Contents getContentByCid(@PathVariable int cid){
-        System.out.println("开始读取数据");
-        Contents contents=contentService.GetContentByCid(cid);
-        System.out.println(contents.toString());
-        return contents;
-    }
+
 }

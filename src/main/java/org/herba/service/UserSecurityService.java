@@ -18,7 +18,6 @@ public class UserSecurityService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users temp = new Users();
-        temp.setName(username);
         List<Users> users = userMapper.selectByParams(temp);
         if(users == null||users.size()==0){
             throw new UsernameNotFoundException("用户名不存在");

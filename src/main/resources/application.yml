@@ -14,4 +14,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: wwx232324
-
+#pagehelper分页插件配置pagehelper.reasonable=true
+#pagehelper:
+#  helper-dialect: mysql
+#  reasonable: true
+#  support-methods-arguments: true
