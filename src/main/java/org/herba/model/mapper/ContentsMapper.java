@@ -1,6 +1,7 @@
 package org.herba.model.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.herba.model.dto.ContentsInfo;
 import org.herba.model.entity.Contents;
 import org.springframework.stereotype.Component;
 
@@ -51,12 +52,12 @@ public interface ContentsMapper {
     Contents selectByPrimaryKey(Integer cid);
 
     /**
-     * selectByPage       根据分页查询文章
+     * selectByType       根据类型查询文章
      *
      * @param type 文章类型
      * @return
      */
-    List<Contents> selectByPage(String type);
+    List<ContentsInfo> selectByType(String type);
 
     /**
      * updateByPrimaryKey   根据ID更新除内容以外的其他字段

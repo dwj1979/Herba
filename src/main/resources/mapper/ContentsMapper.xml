@@ -24,6 +24,34 @@
     <resultMap id="ResultMapWithBLOBs" type="org.herba.model.entity.Contents" extends="BaseResultMap">
         <result column="text" property="text" jdbcType="LONGVARCHAR"/>
     </resultMap>
+    <resultMap id="ResultContentsInfo" type="org.herba.model.dto.ContentsInfo">
+        <id column="cid" property="cid" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="slug" property="slug" jdbcType="VARCHAR"/>
+        <result column="created" property="created" jdbcType="INTEGER"/>
+        <result column="modified" property="modified" jdbcType="INTEGER"/>
+        <result column="order" property="order" jdbcType="INTEGER"/>
+        <result column="authorId" property="authorId" jdbcType="INTEGER"/>
+        <result column="template" property="template" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="commentsNum" property="commentsNum" jdbcType="INTEGER"/>
+        <result column="allowComment" property="allowComment" jdbcType="CHAR"/>
+        <result column="allowPing" property="allowPing" jdbcType="CHAR"/>
+        <result column="allowFeed" property="allowFeed" jdbcType="CHAR"/>
+        <result column="parent" property="parent" jdbcType="INTEGER"/>
+        <result column="viewsNum" property="viewsNum" jdbcType="INTEGER"/>
+        <result column="views" property="views" jdbcType="INTEGER"/>
+        <association property="users" javaType="org.herba.model.entity.Users">
+            <result column="uid" property="uid" jdbcType="INTEGER"/>
+            <result column="uname" property="name" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="metas" ofType="org.herba.model.entity.Metas">
+            <result column="mid" property="mid" jdbcType="INTEGER"/>
+            <result column="mname" property="name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
     cid, title, slug, created, modified, `order`, authorId, template, type, status, password,
     commentsNum, allowComment, allowPing, allowFeed, parent, viewsNum, views
@@ -31,13 +59,15 @@
     <sql id="Blob_Column_List">
     text
   </sql>
-    <!--根据分页查询查询文章-->
-    <select id="selectByPage" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from contents where `type` = #{type,jdbcType=VARCHAR}
+    <!--根据类型查询文章-->
+    <select id="selectByType" resultMap="ResultContentsInfo" parameterType="java.lang.String">
+        SELECT
+        contents.*,metas.mid,metas.name mname,users.uid,users.name uname
+        FROM contents, relationships, metas, users
+        WHERE contents.cid = relationships.cid AND relationships.mid = metas.mid  AND
+        contents.authorId = users.uid and contents.`type` = #{type,jdbcType=VARCHAR}
+        GROUP BY contents.cid
+        ORDER BY contents.cid
     </select>
     <!--通过ID查询文章-->
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">

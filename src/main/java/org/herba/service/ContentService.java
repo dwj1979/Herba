@@ -3,6 +3,7 @@ package org.herba.service;
 import java.util.List;
 
 import com.github.pagehelper.PageHelper;
+import org.herba.model.dto.ContentsInfo;
 import org.herba.model.entity.Contents;
 import org.herba.model.mapper.ContentsMapper;
 
@@ -51,15 +52,16 @@ public class ContentService {
     }
 
     /**
-     * selectByPage    根据分页查询文章
+     * selectByPage    根据分页和类型查询文章
      *
      * @return
      * @param pageNo 页号
      * @param pageSize  页码
+     * @param type  文章类型
      */
-    public List<Contents> selectByPage(int pageNo, int pageSize,String type) {
+    public List<ContentsInfo> selectByType(int pageNo, int pageSize, String type) {
         PageHelper.startPage(pageNo, pageSize);
-        return comtentsMapper.selectByPage(type);
+        return comtentsMapper.selectByType(type);
     }
 
     /**
