@@ -61,13 +61,21 @@
   </sql>
     <!--根据类型查询文章-->
     <select id="selectByType" resultMap="ResultContentsInfo" parameterType="java.lang.String">
-        SELECT
-        contents.*,metas.mid,metas.name mname,users.uid,users.name uname
-        FROM contents, relationships, metas, users
-        WHERE contents.cid = relationships.cid AND relationships.mid = metas.mid  AND
-        contents.authorId = users.uid and contents.`type` = #{type,jdbcType=VARCHAR}
-        GROUP BY contents.cid
-        ORDER BY contents.cid
+        select
+   contents.*,
+    metas.mid,
+    metas.name mname,
+    users.uid,
+    users.name uname
+from
+    (contents
+    left join (
+        relationships
+        left join metas on relationships.mid = metas.mid
+    ) on contents.cid = relationships.cid ),users
+where
+    contents.`type` = #{type,jdbcType=VARCHAR}
+    and contents.authorId    =users.uid
     </select>
     <!--通过ID查询文章-->
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
