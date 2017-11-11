@@ -44,20 +44,35 @@ public interface ContentsMapper {
     int insertSelective(Contents record);
 
     /**
-     * selectByPrimaryKey       通过ID查询文章
+     * selectPostByPrimaryKey       通过ID查询文章
      *
      * @param cid 文章ID
      * @return
      */
-    Contents selectByPrimaryKey(Integer cid);
+    ContentsInfo selectPostByPrimaryKey(Integer cid);
 
     /**
-     * selectByType       根据类型查询文章
+     * selectPostByPrimaryKey       通过ID查询文章
      *
-     * @param type 文章类型
+     * @param cid 页面ID
      * @return
      */
-    List<ContentsInfo> selectByType(String type);
+    ContentsInfo selectPageByPrimaryKey(Integer cid);
+
+    /**
+     * selectPost      查询文章信息
+     *
+     *
+     * @return
+     */
+    List<ContentsInfo> selectPost();
+
+    /**
+     * selectPage       查询页面信息
+     *
+     * @return
+     */
+    List<ContentsInfo> selectPage();
 
     /**
      * updateByPrimaryKey   根据ID更新除内容以外的其他字段

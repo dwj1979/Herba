@@ -12,13 +12,18 @@
     <result column="parent" property="parent" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    mid, name, slug, type, description, count, order, parent
+    mid, name, slug, type, description, count, `order`, `parent`
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from metas
     where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from metas
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from metas

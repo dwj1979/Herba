@@ -50,6 +50,7 @@
         <collection property="metas" ofType="org.herba.model.entity.Metas">
             <result column="mid" property="mid" jdbcType="INTEGER"/>
             <result column="mname" property="name" jdbcType="VARCHAR"/>
+            <result column="mtype" property="type" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
@@ -59,32 +60,65 @@
     <sql id="Blob_Column_List">
     text
   </sql>
-    <!--根据类型查询文章-->
-    <select id="selectByType" resultMap="ResultContentsInfo" parameterType="java.lang.String">
+    <!--查询文章信息-->
+    <select id="selectPost" resultMap="ResultContentsInfo">
         select
-   contents.*,
-    metas.mid,
-    metas.name mname,
-    users.uid,
-    users.name uname
-from
-    (contents
-    left join (
+        contents.*,
+        metas.mid,
+        metas.name mname,
+        users.uid,
+        users.name uname
+        from
+        contents,metas,relationships,users
+        where
+        contents.cid = relationships.cid and relationships.mid = metas.mid
+        and contents.`type` = 'post'
+        and contents.authorId =users.uid
+        and metas.type = 'category'
+    </select>
+    <!--查询页面信息-->
+    <select id="selectPage" resultMap="ResultContentsInfo">
+        select
+        contents.*,
+        metas.mid,
+        metas.name mname,
+        users.uid,
+        users.name uname
+        from
+        (contents
+        left join (
         relationships
         left join metas on relationships.mid = metas.mid
-    ) on contents.cid = relationships.cid ),users
-where
-    contents.`type` = #{type,jdbcType=VARCHAR}
-    and contents.authorId    =users.uid
+        ) on contents.cid = relationships.cid ),users
+        where
+        contents.`type` = 'page'
+        and contents.authorId    =users.uid
     </select>
     <!--通过ID查询文章-->
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from contents
-        where cid = #{cid,jdbcType=INTEGER}
+    <select id="selectPostByPrimaryKey" resultMap="ResultContentsInfo" parameterType="java.lang.Integer">
+        SELECT
+        contents.cid,
+        contents.title,
+        contents.slug,
+        contents.created,
+        contents.modified,
+        contents.text,
+        metas.`name` as mname,
+        metas.mid,
+        metas.type as mtype
+        FROM
+        contents,
+        metas,
+        relationships
+        where contents.cid=relationships.cid and relationships.mid= metas.mid
+        and contents.type='post'
+        and contents.cid=#{cid,jdbcType=INTEGER}
+    </select>
+    <!--通过ID查询页面-->
+    <select id="selectPageByPrimaryKey" resultMap="ResultContentsInfo" parameterType="java.lang.Integer">
+        SELECT
+        * from contents
+        where contents.cid=#{cid,jdbcType=INTEGER}
     </select>
     <!--通过ID删除文章-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

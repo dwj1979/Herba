@@ -3,6 +3,7 @@ package org.herba.service;
 import java.util.List;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.herba.model.dto.ContentsInfo;
 import org.herba.model.entity.Contents;
 import org.herba.model.mapper.ContentsMapper;
@@ -13,14 +14,16 @@ import org.springframework.stereotype.Service;
 /**
  * ContentService 文章服务类
  *
- * @version        1.0
- * @author         Varshonwood
- * @date           17/11/07
+ * @author Varshonwood
+ * @version 1.0
+ * @date 17/11/07
  */
 @Service
 public class ContentService {
 
-    /** Field description */
+    /**
+     * Field description
+     */
     @Autowired
     ContentsMapper comtentsMapper;
 
@@ -30,7 +33,7 @@ public class ContentService {
      * @param cid
      */
     public void deleteByPrimaryKey(int cid) {
-        comtentsMapper.selectByPrimaryKey(cid);
+        comtentsMapper.deleteByPrimaryKey(cid);
     }
 
     /**
@@ -52,27 +55,51 @@ public class ContentService {
     }
 
     /**
-     * selectByPage    根据分页和类型查询文章
+     * selectPost   查询文章
      *
+     * @param pageNo   页号
+     * @param pageSize 页码
      * @return
-     * @param pageNo 页号
-     * @param pageSize  页码
-     * @param type  文章类型
      */
-    public List<ContentsInfo> selectByType(int pageNo, int pageSize, String type) {
+    public PageInfo selectPost(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        return comtentsMapper.selectByType(type);
+        List<ContentsInfo> contentsInfoList = comtentsMapper.selectPost();
+        PageInfo page = new PageInfo(contentsInfoList);
+        return page;
     }
 
     /**
-     * selectByPrimaryKey   根据ID更新除内容以外的其他字段
+     * selectPage   查询页面
      *
-     * @param cid
-     *
+     * @param pageNo   页号
+     * @param pageSize 页码
      * @return
      */
-    public Contents selectByPrimaryKey(int cid) {
-        return comtentsMapper.selectByPrimaryKey(cid);
+    public PageInfo selectPage(int pageNo, int pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<ContentsInfo> contentsInfoList = comtentsMapper.selectPage();
+        PageInfo page = new PageInfo(contentsInfoList);
+        return page;
+    }
+
+    /**
+     * selectPostByPrimaryKey   根据ID查询文章
+     *
+     * @param cid
+     * @return
+     */
+    public ContentsInfo selectPostByPrimaryKey(int cid) {
+        return comtentsMapper.selectPostByPrimaryKey(cid);
+    }
+
+    /**
+     * selectPageByPrimaryKey   根据ID查询页面
+     *
+     * @param cid
+     * @return
+     */
+    public ContentsInfo selectPageByPrimaryKey(int cid) {
+        return comtentsMapper.selectPageByPrimaryKey(cid);
     }
 
     /**
