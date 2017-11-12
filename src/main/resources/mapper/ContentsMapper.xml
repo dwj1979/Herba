@@ -43,6 +43,7 @@
         <result column="parent" property="parent" jdbcType="INTEGER"/>
         <result column="viewsNum" property="viewsNum" jdbcType="INTEGER"/>
         <result column="views" property="views" jdbcType="INTEGER"/>
+        <result column="text" property="text" jdbcType="LONGVARCHAR"/>
         <association property="users" javaType="org.herba.model.entity.Users">
             <result column="uid" property="uid" jdbcType="INTEGER"/>
             <result column="uname" property="name" jdbcType="VARCHAR"/>
