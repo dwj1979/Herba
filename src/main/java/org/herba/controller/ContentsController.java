@@ -3,16 +3,15 @@ package org.herba.controller;
 
 import com.github.pagehelper.PageInfo;
 import org.herba.model.dto.ContentDetail;
+import org.herba.model.dto.ContentSave;
 import org.herba.model.dto.ContentsInfo;
+import org.herba.model.entity.Contents;
 import org.herba.model.entity.Metas;
 import org.herba.service.ContentService;
 
 import org.herba.service.MetaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public class ContentsController {
     MetaService metaService;
 
     /**
-     * getPostByPage   根据分页获得文章信息
+     * getPostByPage   根据分页获得文章或页面列表信息信息
      *
      * @param type   请求页面类型
      * @param pageNo 请求页数
@@ -67,7 +66,7 @@ public class ContentsController {
     }
 
     /**
-     * getPostById   根据Id获得文章信息
+     * getPostById   根据Id获得文章或信息
      *
      * @param type 请求页面类型
      * @param cid  文章ID
@@ -94,5 +93,17 @@ public class ContentsController {
         }
         return contentDetail;
     }
+
+    @RequestMapping(value = "/admin/save/{type}")
+    public void saveContent(@PathVariable String type, @RequestBody ContentSave contents, HttpServletRequest request, HttpServletResponse response) {
+        int code = 0;
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "后台请求保存id为"+contents.getContents().getCid()+"的文章");
+        if (type.equals("post")) {
+            code = contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
+        }
+        response.setStatus(code);
+    }
+
+
 }
 //~ Formatted by Jindent --- http://www.jindent.comß

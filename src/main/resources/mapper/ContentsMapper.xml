@@ -104,6 +104,7 @@
         contents.created,
         contents.modified,
         contents.text,
+        contents.type,
         metas.`name` as mname,
         metas.mid,
         metas.type as mtype
@@ -126,23 +127,6 @@
     delete from contents
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
-    <!--新增文章全部字段-->
-    <insert id="insert" parameterType="org.herba.model.entity.Contents">
-    insert into contents (cid, title, slug, 
-      created, modified, order, 
-      authorId, template, type, 
-      status, password, commentsNum, 
-      allowComment, allowPing, allowFeed, 
-      parent, viewsNum, views, 
-      text)
-    values (#{cid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR}, 
-      #{created,jdbcType=INTEGER}, #{modified,jdbcType=INTEGER}, #{order,jdbcType=INTEGER}, 
-      #{authorId,jdbcType=INTEGER}, #{template,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{commentsNum,jdbcType=INTEGER}, 
-      #{allowComment,jdbcType=CHAR}, #{allowPing,jdbcType=CHAR}, #{allowFeed,jdbcType=CHAR}, 
-      #{parent,jdbcType=INTEGER}, #{viewsNum,jdbcType=INTEGER}, #{views,jdbcType=INTEGER}, 
-      #{text,jdbcType=LONGVARCHAR})
-  </insert>
     <!--新增文章部分字段-->
     <insert id="insertSelective" parameterType="org.herba.model.entity.Contents">
         insert into contents
@@ -347,28 +331,6 @@
       viewsNum = #{viewsNum,jdbcType=INTEGER},
       views = #{views,jdbcType=INTEGER},
       text = #{text,jdbcType=LONGVARCHAR}
-    where cid = #{cid,jdbcType=INTEGER}
-  </update>
-    <!--根据ID更新除内容以外的其他字段-->
-    <update id="updateByPrimaryKey" parameterType="org.herba.model.entity.Contents">
-    update contents
-    set title = #{title,jdbcType=VARCHAR},
-      slug = #{slug,jdbcType=VARCHAR},
-      created = #{created,jdbcType=INTEGER},
-      modified = #{modified,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
-      authorId = #{authorId,jdbcType=INTEGER},
-      template = #{template,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      commentsNum = #{commentsNum,jdbcType=INTEGER},
-      allowComment = #{allowComment,jdbcType=CHAR},
-      allowPing = #{allowPing,jdbcType=CHAR},
-      allowFeed = #{allowFeed,jdbcType=CHAR},
-      parent = #{parent,jdbcType=INTEGER},
-      viewsNum = #{viewsNum,jdbcType=INTEGER},
-      views = #{views,jdbcType=INTEGER}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -15,6 +15,9 @@ public interface MetasMapper {
 
     int insertSelective(Metas record);
 
+    int insertSelectiveMultiple(List<Metas> record);
+
+
     Metas selectByPrimaryKey(Integer mid);
 
     List<Metas> selectAll();

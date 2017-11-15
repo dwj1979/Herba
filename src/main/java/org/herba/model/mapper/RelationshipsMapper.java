@@ -1,11 +1,21 @@
 package org.herba.model.mapper;
 
-import org.herba.model.entity.RelationshipsKey;
+import org.apache.ibatis.annotations.Mapper;
+import org.herba.model.entity.Relationships;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Mapper
+@Component
 public interface RelationshipsMapper {
-    int deleteByPrimaryKey(RelationshipsKey key);
+    int deleteByPrimaryKey(int key);
 
-    int insert(RelationshipsKey record);
+    int insert(Relationships record);
 
-    int insertSelective(RelationshipsKey record);
+    int insertMultiple(List<Relationships> relationshipsList);
+
+    int updateCategoryByPrimaryKey(Relationships relationships);
+
+    int deleteTagMultiple(List<Relationships> relationships);
 }

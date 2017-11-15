@@ -1,5 +1,8 @@
 package org.herba.model.entity;
 
+import lombok.Data;
+
+@Data
 public class Comments {
     private Integer coid;
 

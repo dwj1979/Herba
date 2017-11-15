@@ -1,6 +1,9 @@
 package org.herba.model.entity;
 
-public class RelationshipsKey {
+import lombok.Data;
+
+@Data
+public class Relationships {
     private Integer cid;
 
     private Integer mid;
@@ -18,6 +21,14 @@ public class RelationshipsKey {
     }
 
     public void setMid(Integer mid) {
+        this.mid = mid;
+    }
+
+    public Relationships() {
+    }
+
+    public Relationships(Integer cid, Integer mid) {
+        this.cid = cid;
         this.mid = mid;
     }
 }

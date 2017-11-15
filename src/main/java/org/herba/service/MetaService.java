@@ -15,5 +15,9 @@ public class MetaService {
     public List<Metas> selectAll() {
         return metasMapper.selectAll();
     }
+    public int insertSelective(Metas record){
+        return metasMapper.insertSelective(record);
+    }
+
 
 }

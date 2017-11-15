@@ -27,13 +27,6 @@ public interface ContentsMapper {
      */
     int deleteByPrimaryKey(Integer cid);
 
-    /**
-     * insert   新增文章全部字段
-     *
-     * @param record 文章实例
-     * @return
-     */
-    int insert(Contents record);
 
     /**
      * insertSelective  新增文章部分字段
@@ -62,7 +55,6 @@ public interface ContentsMapper {
     /**
      * selectPost      查询文章信息
      *
-     *
      * @return
      */
     List<ContentsInfo> selectPost();
@@ -90,13 +82,6 @@ public interface ContentsMapper {
      */
     int updateByPrimaryKeySelective(Contents record);
 
-    /**
-     * updateByPrimaryKeyWithBLOBs  根据ID更新文章全部字段
-     *
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKeyWithBLOBs(Contents record);
 }
 
 
