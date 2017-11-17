@@ -15,5 +15,5 @@
 target/  
 bin/  
 .svn  
-*.iml 
-src/main/resources/templates/ 
+*.iml
+src/main/resources/templates/
