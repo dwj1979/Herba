@@ -29,7 +29,6 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api")
 public class ContentsController {
 
     /**
@@ -62,6 +61,7 @@ public class ContentsController {
         } else {
             response.setStatus(200);
         }
+        System.out.println(pageInfo);
         return pageInfo;
     }
 
@@ -91,16 +91,23 @@ public class ContentsController {
         } else {
             response.setStatus(200);
         }
+        System.out.println(contentDetail);
         return contentDetail;
     }
-
+    /**
+     * saveContent   保存文章或者页面
+     *
+     * @param type 请求页面类型
+     * @return
+     */
     @RequestMapping(value = "/admin/save/{type}")
     public void saveContent(@PathVariable String type, @RequestBody ContentSave contents, HttpServletRequest request, HttpServletResponse response) {
         int code = 0;
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "后台请求保存id为"+contents.getContents().getCid()+"的文章");
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "后台请求保存id为" + contents.getContents().getCid() + "的文章");
         if (type.equals("post")) {
             code = contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
         }
+        System.out.println("code is " + code);
         response.setStatus(code);
     }
 

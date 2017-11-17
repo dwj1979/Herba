@@ -9,4 +9,7 @@
         insert into options (name, user, value)
         values (#{name,jdbcType=VARCHAR}, #{user,jdbcType=INTEGER},#{value,jdbcType=VARCHAR})
     </insert>
+    <select id="selectAll" resultType="org.herba.model.entity.Options">
+        select name,user,value from options
+    </select>
 </mapper>

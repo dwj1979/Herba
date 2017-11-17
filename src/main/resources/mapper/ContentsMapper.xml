@@ -105,6 +105,11 @@
         contents.modified,
         contents.text,
         contents.type,
+        contents.status,
+        contents.password,
+        contents.allowComment,
+        contents.allowPing,
+        contents.allowfeed,
         metas.`name` as mname,
         metas.mid,
         metas.type as mtype
