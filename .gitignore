@@ -16,4 +16,4 @@ target/
 bin/  
 .svn  
 *.iml
-src/main/resources/templates/
+src/main/resources/uploadFiles

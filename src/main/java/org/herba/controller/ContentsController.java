@@ -61,7 +61,6 @@ public class ContentsController {
         } else {
             response.setStatus(200);
         }
-        System.out.println(pageInfo);
         return pageInfo;
     }
 
@@ -91,7 +90,6 @@ public class ContentsController {
         } else {
             response.setStatus(200);
         }
-        System.out.println(contentDetail);
         return contentDetail;
     }
     /**
@@ -107,7 +105,6 @@ public class ContentsController {
         if (type.equals("post")) {
             code = contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
         }
-        System.out.println("code is " + code);
         response.setStatus(code);
     }
 
