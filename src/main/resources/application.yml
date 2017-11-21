@@ -14,8 +14,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: herba
     password: wwx232324
-#pagehelper分页插件配置pagehelper.reasonable=true
-#pagehelper:
-#  helper-dialect: mysql
-#  reasonable: true
-#  support-methods-arguments: true
+# 后台参数
+# 图片保存路径
+imageFilePath: src/main/resources/uploadImages/
+# 文件保存路径
+filePath: src/main/resources/uploadFiles/
+#文件显示Api
+imageShowApi: http://localhost:8081/getImage/
+#文件下载Api
+fileDownloadApi: http://localhost:8081/getFile/

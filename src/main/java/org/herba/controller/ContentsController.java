@@ -104,10 +104,9 @@ public class ContentsController {
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "后台请求保存id为" + contents.getContents().getCid() + "的文章");
         if (type.equals("post")) {
             code = contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
+        }else {
+            code = contentService.savePage(contents.getContents());
         }
         response.setStatus(code);
     }
-
-
 }
-//~ Formatted by Jindent --- http://www.jindent.comß

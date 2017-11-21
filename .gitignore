@@ -16,4 +16,5 @@ target/
 bin/  
 .svn  
 *.iml
+src/main/resources/uploadImages
 src/main/resources/uploadFiles

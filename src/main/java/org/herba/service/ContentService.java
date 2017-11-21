@@ -38,24 +38,6 @@ public class ContentService {
     @Autowired
     MetasMapper metasMapper;
 
-    /**
-     * deleteByPrimaryKey 根据ID删除文章
-     *
-     * @param cid
-     */
-    public void deleteByPrimaryKey(int cid) {
-        comtentsMapper.deleteByPrimaryKey(cid);
-    }
-
-
-    /**
-     * insertSelective  插入文章部分字段
-     *
-     * @param record
-     */
-    public void insertSelective(Contents record) {
-        comtentsMapper.insertSelective(record);
-    }
 
     /**
      * selectPost   查询文章
@@ -121,11 +103,20 @@ public class ContentService {
         List<Metas> addTags = new ArrayList<Metas>();
         //目前文章所含标签关系
         List<Relationships> relationshipsList = new ArrayList<>();
-        //目前文章所含标签关系
+        //目前文章所含新增标签关系
         List<Relationships> addRelationshipsList = new ArrayList<>();
+        boolean isNewContent = false;
         try {
-            //更新文章信息
-            comtentsMapper.updateByPrimaryKeySelective(contents);
+            //判断文章是否存在
+            if (contents.getCid() == null) {
+                isNewContent = true;
+                //插入新文章
+                comtentsMapper.insertSelective(contents);
+            } else {
+                //更新文章信息
+                comtentsMapper.updateByPrimaryKeySelective(contents);
+            }
+
             //提取新增标签
             for (Metas tag : tags) {
                 if (tag.getMid() == null) {
@@ -133,7 +124,7 @@ public class ContentService {
                 }
             }
             //给新增加的标签添加mid
-            if (addTags.size() !=0) {
+            if (addTags.size() != 0) {
                 for (Metas tag : addTags) {
                     int mid = metasMapper.insertSelective(tag);
                     addRelationshipsList.add(new Relationships(contents.getCid(), tag.getMid()));
@@ -148,11 +139,16 @@ public class ContentService {
             //删除未关联标签信息
             relationshipsMapper.deleteTagMultiple(relationshipsList);
             //插入标签关联
-            if (addRelationshipsList.size() !=0){
+            if (addRelationshipsList.size() != 0) {
                 relationshipsMapper.insertMultiple(addRelationshipsList);
             }
-            //更新分类信息
-            relationshipsMapper.updateCategoryByPrimaryKey(relationships);
+            if (isNewContent) {
+                //更新分类信息
+                relationshipsMapper.insert(relationships);
+            } else {
+                //更新分类信息
+                relationshipsMapper.updateCategoryByPrimaryKey(relationships);
+            }
             code = 200;
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,5 +158,16 @@ public class ContentService {
         return code;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public int savePage(Contents contents) {
+        int code = 0;
+        try {
+            comtentsMapper.updateByPrimaryKeySelective(contents);
+            code = 200;
+        } catch (Exception e) {
+            e.printStackTrace();
+            code = 204;
+        }
+        return code;
+    }
 }
-//~ Formatted by Jindent --- http://www.jindent.com

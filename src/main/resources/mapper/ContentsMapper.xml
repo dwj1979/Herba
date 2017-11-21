@@ -76,6 +76,7 @@
         and contents.`type` = 'post'
         and contents.authorId =users.uid
         and metas.type = 'category'
+        ORDER  by contents.created desc
     </select>
     <!--查询页面信息-->
     <select id="selectPage" resultMap="ResultContentsInfo">
@@ -133,7 +134,7 @@
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
     <!--新增文章部分字段-->
-    <insert id="insertSelective" parameterType="org.herba.model.entity.Contents">
+    <insert id="insertSelective" parameterType="org.herba.model.entity.Contents" useGeneratedKeys="true"  keyProperty="cid">
         insert into contents
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="cid != null">
@@ -152,7 +153,7 @@
                 modified,
             </if>
             <if test="order != null">
-                order,
+                `order`,
             </if>
             <if test="authorId != null">
                 authorId,
@@ -161,7 +162,7 @@
                 template,
             </if>
             <if test="type != null">
-                type,
+                `type`,
             </if>
             <if test="status != null">
                 status,
@@ -271,7 +272,7 @@
                 modified = #{modified,jdbcType=INTEGER},
             </if>
             <if test="order != null">
-                order = #{order,jdbcType=INTEGER},
+                `order` = #{order,jdbcType=INTEGER},
             </if>
             <if test="authorId != null">
                 authorId = #{authorId,jdbcType=INTEGER},
@@ -280,7 +281,7 @@
                 template = #{template,jdbcType=VARCHAR},
             </if>
             <if test="type != null">
-                type = #{type,jdbcType=VARCHAR},
+                `type` = #{type,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=VARCHAR},
