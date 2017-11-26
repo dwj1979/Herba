@@ -5,11 +5,12 @@ import com.github.pagehelper.PageInfo;
 import org.herba.model.dto.ContentDetail;
 import org.herba.model.dto.ContentSave;
 import org.herba.model.dto.ContentsInfo;
-import org.herba.model.entity.Contents;
 import org.herba.model.entity.Metas;
 import org.herba.service.ContentService;
 
 import org.herba.service.MetaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,6 @@ import java.util.List;
  * @date 17/11/07
  */
 
-@CrossOrigin
 @RestController
 public class ContentsController {
 
@@ -48,7 +48,6 @@ public class ContentsController {
      */
     @RequestMapping(value = "/admin/{type}/page/{pageNo}")
     public PageInfo getPostByPage(@PathVariable int pageNo, @PathVariable String type, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "后台请求第" + pageNo + "页" + (type.equals("post") ? "文章" : "页面") + "列表");
         PageInfo pageInfo = new PageInfo();
         if (type.equals("post")) {
             pageInfo = contentService.selectPost(pageNo, 5);
@@ -73,7 +72,6 @@ public class ContentsController {
      */
     @RequestMapping(value = "/admin/{type}/{cid}")
     public ContentDetail getPostById(@PathVariable int cid, @PathVariable String type, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "后台请求id 为" + cid + "的" + (type.equals("post") ? "文章" : "页面") + "列表");
         ContentDetail contentDetail = new ContentDetail();
         if (type.equals("post")) {
             ContentsInfo contentsInfo = contentService.selectPostByPrimaryKey(cid);
@@ -92,6 +90,7 @@ public class ContentsController {
         }
         return contentDetail;
     }
+
     /**
      * saveContent   保存文章或者页面
      *
@@ -101,10 +100,9 @@ public class ContentsController {
     @RequestMapping(value = "/admin/save/{type}")
     public void saveContent(@PathVariable String type, @RequestBody ContentSave contents, HttpServletRequest request, HttpServletResponse response) {
         int code = 0;
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "后台请求保存id为" + contents.getContents().getCid() + "的文章");
         if (type.equals("post")) {
             code = contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
-        }else {
+        } else {
             code = contentService.savePage(contents.getContents());
         }
         response.setStatus(code);

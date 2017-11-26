@@ -5,122 +5,35 @@ import lombok.Data;
 @Data
 public class Users {
     private Integer uid;
-
     private String name;
-
     private String password;
-
     private String mail;
-
     private String url;
-
     private String screenName;
-
     private Integer created;
-
     private Integer activated;
-
     private Integer logged;
-
     private String group;
-
     private String authCode;
 
-    private String role;
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
+    public Users(Integer uid, String name, String password, String mail, String url, String screenname, Integer created, Integer activated, Integer logged, String group, String authcode) {
         this.uid = uid;
+        this.name = name;
+        this.password = password;
+        this.mail = mail;
+        this.url = url;
+        this.screenName = screenname;
+        this.created = created;
+        this.activated = activated;
+        this.logged = logged;
+        this.group = group;
+        this.authCode = authcode;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Users(String name) {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getScreenName() {
-        return screenName;
-    }
-
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
-    }
-
-    public Integer getCreated() {
-        return created;
-    }
-
-    public void setCreated(Integer created) {
-        this.created = created;
-    }
-
-    public Integer getActivated() {
-        return activated;
-    }
-
-    public void setActivated(Integer activated) {
-        this.activated = activated;
-    }
-
-    public Integer getLogged() {
-        return logged;
-    }
-
-    public void setLogged(Integer logged) {
-        this.logged = logged;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public String getAuthCode() {
-        return authCode;
-    }
-
-    public void setAuthCode(String authCode) {
-        this.authCode = authCode;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public Users() {
     }
 }

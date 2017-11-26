@@ -11,9 +11,18 @@
   </delete>
     <delete id="deleteTagMultiple" parameterType="java.util.ArrayList">
         delete from relationships
-        where mid not in (select mid from metas where metas.type='category') and mid not in
+        where mid not in (select mid from metas where metas.type='category')
+        <if test="list != null">
+        and mid not in
+        </if>
         <foreach item="item" collection="list" open="(" separator="," close=")">
             #{item.mid}
+        </foreach>
+        <if test="list != null">
+            and cid  in
+        </if>
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item.cid}
         </foreach>
     </delete>
     <insert id="insert" parameterType="org.herba.model.entity.Relationships">

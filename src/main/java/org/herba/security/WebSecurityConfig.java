@@ -1,13 +1,24 @@
-package org.herba.config;
+package org.herba.security;
 
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.herba.service.UserSecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 //必须使用申明此类为安全控制类，否则将会直接调用默认权限配置并且控制台打印默认密码
 @EnableWebSecurity
@@ -22,32 +33,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userSecurityService());
     }
 
+    @Autowired
+    protected AuthenticationSuccessHandler formAuthenticationSuccessHandler;
+    @Autowired
+    protected AuthenticationFailureHandler formAuthenticationFailureHandler;
+    @Autowired
+    protected LogoutSuccessHandler formLogoutSuccessHandler;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 //权限名不带ROLE,自动增加前缀
-                .antMatchers("/login",  "/css/**","/font/**","/api/**","/**").permitAll()
+                .antMatchers("/css/**", "/font/**","/admin/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().
-                loginPage("/login")
-                //设置默认登录成功跳转页面
-                .defaultSuccessUrl("/client/home").permitAll()
-                .and()
-                //开启cookie保存用户数据
-                .rememberMe()
-                //设置cookie有效期
-                .tokenValiditySeconds(60 * 60 * 24 * 7)
+                .formLogin()
+                .loginProcessingUrl("/admin/login")
+                .successHandler(formAuthenticationSuccessHandler)
+                .failureHandler(formAuthenticationFailureHandler)
                 .and()
                 .logout()
                 //默认注销行为为logout，可以通过下面的方式来修改
-                .logoutUrl("/logout")
-                //设置注销成功后跳转页面，默认是跳转到登录页面
-                .logoutSuccessUrl("/login?logout=true")
+                .logoutUrl("/admin/logout")
+                .deleteCookies("JSESSIONID")
                 .permitAll()
-//                //关闭csrf后可以正常进行常规跳转，无需模板引擎
+                .logoutSuccessHandler(formLogoutSuccessHandler)
+                //关闭csr然后开启cors
                 .and()
-                .csrf().disable();
+                .csrf().disable().cors();
     }
 }

@@ -11,15 +11,26 @@ spring:
     name: blog
   datasource:
     url:  jdbc:mysql://103.73.49.126:3306/herba?useUnicode=true&characterEncoding=utf-8&useSSL=false
+#    数据库驱动类
+#    driver-class-name: org.mariadb.jdbc.Driver
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: herba
     password: wwx232324
+  http:
+    multipart:
+      max-file-size: 100mb
+      max-request-size: 100mb
 # 后台参数
 # 图片保存路径
-imageFilePath: src/main/resources/uploadImages/
+herba.file.imageFilePath: src/main/resources/uploadImages/
 # 文件保存路径
-filePath: src/main/resources/uploadFiles/
+herba.file.filePath: src/main/resources/uploadFiles/
 #文件显示Api
-imageShowApi: http://localhost:8081/getImage/
+herba.file.imageShowApi: http://localhost:8081/getImage/
 #文件下载Api
-fileDownloadApi: http://localhost:8081/getFile/
+herba.file.fileDownloadApi: http://localhost:8081/getFile/
+logging:
+  level: info
+security:
+  basic:
+    enabled: false

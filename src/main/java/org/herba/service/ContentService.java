@@ -112,6 +112,9 @@ public class ContentService {
                 isNewContent = true;
                 //插入新文章
                 comtentsMapper.insertSelective(contents);
+                contents.setSlug(contents.getCid().toString());
+                //更新slug
+                comtentsMapper.updateByPrimaryKeySelective(contents);
             } else {
                 //更新文章信息
                 comtentsMapper.updateByPrimaryKeySelective(contents);
@@ -162,7 +165,12 @@ public class ContentService {
     public int savePage(Contents contents) {
         int code = 0;
         try {
-            comtentsMapper.updateByPrimaryKeySelective(contents);
+            //判断文章是否存在
+            if (contents.getCid() == null) {
+                comtentsMapper.insertSelective(contents);
+            } else {
+                comtentsMapper.updateByPrimaryKeySelective(contents);
+            }
             code = 200;
         } catch (Exception e) {
             e.printStackTrace();
