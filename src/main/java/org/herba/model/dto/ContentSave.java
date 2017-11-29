@@ -8,7 +8,7 @@ import org.herba.model.entity.Metas;
 import lombok.Data;
 
 /**
- * ContentSave 文章详情保存所使用的类
+ * ContentSave 后台文章详情保存所使用的类
  *
  * @version        1.0
  * @author         Varshonwood

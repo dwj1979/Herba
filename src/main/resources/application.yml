@@ -26,9 +26,9 @@ herba.file.imageFilePath: src/main/resources/uploadImages/
 # 文件保存路径
 herba.file.filePath: src/main/resources/uploadFiles/
 #文件显示Api
-herba.file.imageShowApi: http://localhost:8081/getImage/
+herba.file.imageShowApi: http://192.168.50.224:8081/getImage/
 #文件下载Api
-herba.file.fileDownloadApi: http://localhost:8081/getFile/
+herba.file.fileDownloadApi: http://192.168.50.224:8081/getFile/
 logging:
   level: info
 security:

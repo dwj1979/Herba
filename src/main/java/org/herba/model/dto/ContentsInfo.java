@@ -8,7 +8,7 @@ import lombok.Data;
 import org.herba.model.entity.Users;
 
 /**
- * ContentsInfo 文章或则页面的信息，无全部标签和分类信息
+ * ContentsInfo 后台分页文章或则页面的信息，无全部标签和分类信息
  *
  * @author Varshonwood
  * @version 1.0

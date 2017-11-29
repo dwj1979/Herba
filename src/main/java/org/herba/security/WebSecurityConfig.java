@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 //权限名不带ROLE,自动增加前缀
-                .antMatchers("/css/**", "/font/**","/admin/login").permitAll()
+                .antMatchers("/css/**", "/font/**","/admin/login","/admin/post/**","/admin/page/**","/getImage/**","/getFile/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
