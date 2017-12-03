@@ -2,6 +2,7 @@ package org.herba.model.dto;
 
 import java.util.List;
 
+import org.herba.model.entity.Comments;
 import org.herba.model.entity.Metas;
 
 import lombok.Data;
@@ -35,8 +36,18 @@ public class ContentsInfo {
     private Integer viewsNum;
     private Integer views;
     private String text;
+    /**
+     * metas 和文章有关联的所有标签和分类
+     */
     private List<Metas> metas;
+    /**
+     * users 文章的作者信息
+     */
     private Users users;
+    /**
+     * comments 和文章有关联的评论信息
+     */
+    private List<Comments> comments;
 
     /**
      * ContentsInfo

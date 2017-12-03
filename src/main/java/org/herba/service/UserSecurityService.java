@@ -30,6 +30,6 @@ public class UserSecurityService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(temp.getGroup()));
         }
 
-        return new FormUserDetails(temp.getUid(),temp.getName(),temp.getPassword(),true,authorities);
+        return new FormUserDetails(temp.getUid(),temp.getName(),temp.getScreenName(),temp.getPassword(),true,authorities);
     }
 }

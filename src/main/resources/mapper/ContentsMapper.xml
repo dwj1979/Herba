@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.herba.model.mapper.ContentsMapper">
-    <resultMap id="BaseResultMap" type="org.herba.model.entity.Contents">
-        <id column="cid" property="cid" jdbcType="INTEGER"/>
-        <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="slug" property="slug" jdbcType="VARCHAR"/>
-        <result column="created" property="created" jdbcType="INTEGER"/>
-        <result column="modified" property="modified" jdbcType="INTEGER"/>
-        <result column="order" property="order" jdbcType="INTEGER"/>
-        <result column="authorId" property="authorId" jdbcType="INTEGER"/>
-        <result column="template" property="template" jdbcType="VARCHAR"/>
-        <result column="type" property="type" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="VARCHAR"/>
-        <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="commentsNum" property="commentsNum" jdbcType="INTEGER"/>
-        <result column="allowComment" property="allowComment" jdbcType="CHAR"/>
-        <result column="allowPing" property="allowPing" jdbcType="CHAR"/>
-        <result column="allowFeed" property="allowFeed" jdbcType="CHAR"/>
-        <result column="parent" property="parent" jdbcType="INTEGER"/>
-        <result column="viewsNum" property="viewsNum" jdbcType="INTEGER"/>
-        <result column="views" property="views" jdbcType="INTEGER"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="org.herba.model.entity.Contents" extends="BaseResultMap">
-        <result column="text" property="text" jdbcType="LONGVARCHAR"/>
-    </resultMap>
     <resultMap id="ResultContentsInfo" type="org.herba.model.dto.ContentsInfo">
         <id column="cid" property="cid" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
@@ -46,12 +23,27 @@
         <result column="text" property="text" jdbcType="LONGVARCHAR"/>
         <association property="users" javaType="org.herba.model.entity.Users">
             <result column="uid" property="uid" jdbcType="INTEGER"/>
-            <result column="uname" property="name" jdbcType="VARCHAR"/>
+            <result column="screenName" property="screenName" jdbcType="VARCHAR"/>
         </association>
         <collection property="metas" ofType="org.herba.model.entity.Metas">
             <result column="mid" property="mid" jdbcType="INTEGER"/>
             <result column="mname" property="name" jdbcType="VARCHAR"/>
             <result column="mtype" property="type" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="comments" ofType="org.herba.model.entity.Comments">
+            <result column="coid" property="coid" jdbcType="INTEGER"/>
+            <result column="cocreated" property="created" jdbcType="INTEGER"/>
+            <result column="coauthor" property="author" jdbcType="VARCHAR"/>
+            <result column="coauthorId" property="authorId" jdbcType="INTEGER"/>
+            <result column="ownerId" property="ownerId" jdbcType="INTEGER"/>
+            <result column="mail" property="mail" jdbcType="VARCHAR"/>
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="ip" property="ip" jdbcType="VARCHAR"/>
+            <result column="agent" property="agent" jdbcType="VARCHAR"/>
+            <result column="cotype" property="type" jdbcType="VARCHAR"/>
+            <result column="costatus" property="status" jdbcType="VARCHAR"/>
+            <result column="coparent" property="parent" jdbcType="INTEGER"/>
+            <result column="cotext" property="text" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
@@ -68,7 +60,7 @@
         metas.mid,
         metas.name mname,
         users.uid,
-        users.name uname
+        users.screenName
         from
         contents,metas,relationships,users
         where
@@ -85,7 +77,7 @@
         metas.mid,
         metas.name mname,
         users.uid,
-        users.name uname
+        users.screenName
         from
         (contents
         left join (
@@ -113,20 +105,39 @@
         contents.allowfeed,
         metas.`name` as mname,
         metas.mid,
-        metas.type as mtype
+        metas.type as mtype,
+        comments.coid,
+        comments.created,
+        comments.author AS coauthor,
+        comments.authorId AS coauthorId,
+        comments.ownerId,
+        comments.mail,
+        comments.url,
+        comments.ip,
+        comments.agent,
+        comments.text AS cotext,
+        comments.type AS cotype,
+        comments.`status` AS costatus,
+        comments.parent AS coparent,
+        users.uid,
+        users.screenName
         FROM
-        contents,
+        contents LEFT JOIN comments on contents.cid = comments.cid,
         metas,
-        relationships
-        where contents.cid=relationships.cid and relationships.mid= metas.mid
+        relationships,
+        users
+        where contents.cid=relationships.cid and relationships.mid= metas.mid and users.uid = contents.authorid
         and contents.type='post'
         and contents.cid=#{cid,jdbcType=INTEGER}
     </select>
     <!--通过ID查询页面-->
     <select id="selectPageByPrimaryKey" resultMap="ResultContentsInfo" parameterType="java.lang.Integer">
         SELECT
-        * from contents
-        where contents.cid=#{cid,jdbcType=INTEGER}
+        contents.*,
+        users.uid,
+        users.screenName
+         from contents,users
+        where contents.authorid=user.uid and contents. contents.cid=#{cid,jdbcType=INTEGER}
     </select>
     <!--通过ID删除文章-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -134,7 +145,8 @@
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
     <!--新增文章部分字段-->
-    <insert id="insertSelective" parameterType="org.herba.model.entity.Contents" useGeneratedKeys="true"  keyProperty="cid">
+    <insert id="insertSelective" parameterType="org.herba.model.entity.Contents" useGeneratedKeys="true"
+            keyProperty="cid">
         insert into contents
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="cid != null">

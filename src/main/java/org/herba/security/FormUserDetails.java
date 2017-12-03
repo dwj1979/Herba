@@ -10,6 +10,7 @@ import java.util.Collection;
 public class FormUserDetails implements UserDetails {
     private int uid;
     private String username;
+    private String screenName;
     private String password;
     private boolean enabled;
     private Collection<? extends GrantedAuthority> authorities;
@@ -19,9 +20,10 @@ public class FormUserDetails implements UserDetails {
         return authorities;
     }
 
-    public FormUserDetails(int uid, String username, String password, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
+    public FormUserDetails(int uid, String username, String screenName, String password, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
         this.uid = uid;
         this.username = username;
+        this.screenName = screenName;
         this.password = password;
         this.enabled = enabled;
         this.authorities = authorities;

@@ -87,17 +87,16 @@ public class ContentService {
         return comtentsMapper.selectPageByPrimaryKey(cid);
     }
 
-    /**
-     * updateByPrimaryKeySelective  根据ID更新文章部分字段
-     *
-     * @param record
-     */
-    public void updateByPrimaryKeySelective(Contents record) {
-        comtentsMapper.updateByPrimaryKeySelective(record);
-    }
 
+    /**
+     * savePost  保存文章信息
+     *
+     * @param contents     页面信息
+     * @param categorysKey 分类ID
+     * @param tags         标签信息
+     */
     @Transactional(rollbackFor = Exception.class)
-    public int savePost(Contents contents, int categorysKey, List<Metas> tags) {
+    public void savePost(Contents contents, int categorysKey, List<Metas> tags) {
         int code = 0;
         //新增标签
         List<Metas> addTags = new ArrayList<Metas>();
@@ -152,17 +151,19 @@ public class ContentService {
                 //更新分类信息
                 relationshipsMapper.updateCategoryByPrimaryKey(relationships);
             }
-            code = 200;
         } catch (Exception e) {
             e.printStackTrace();
-            code = 204;
         }
 
-        return code;
     }
 
+    /**
+     * savePage  保存页面信息
+     *
+     * @param contents 页面信息
+     */
     @Transactional(rollbackFor = Exception.class)
-    public int savePage(Contents contents) {
+    public void savePage(Contents contents) {
         int code = 0;
         try {
             //判断文章是否存在
@@ -171,11 +172,8 @@ public class ContentService {
             } else {
                 comtentsMapper.updateByPrimaryKeySelective(contents);
             }
-            code = 200;
         } catch (Exception e) {
             e.printStackTrace();
-            code = 204;
         }
-        return code;
     }
 }

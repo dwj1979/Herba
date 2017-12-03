@@ -55,11 +55,6 @@ public class ContentsController {
         } else {
             pageInfo = contentService.selectPage(pageNo, 5);
         }
-        if (pageInfo.getList().size() == 0) {
-            response.setStatus(204);
-        } else {
-            response.setStatus(200);
-        }
         return pageInfo;
     }
 
@@ -83,11 +78,6 @@ public class ContentsController {
             ContentsInfo contentsInfo = contentService.selectPageByPrimaryKey(cid);
             contentDetail.setContentsInfo(contentsInfo);
         }
-        if (contentDetail.getContentsInfo() == null) {
-            response.setStatus(204);
-        } else {
-            response.setStatus(200);
-        }
         return contentDetail;
     }
 
@@ -99,12 +89,10 @@ public class ContentsController {
      */
     @RequestMapping(value = "/admin/save/{type}")
     public void saveContent(@PathVariable String type, @RequestBody ContentSave contents, HttpServletRequest request, HttpServletResponse response) {
-        int code = 0;
         if (type.equals("post")) {
-            code = contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
+            contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
         } else {
-            code = contentService.savePage(contents.getContents());
+            contentService.savePage(contents.getContents());
         }
-        response.setStatus(code);
     }
 }
