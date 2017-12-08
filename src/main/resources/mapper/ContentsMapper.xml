@@ -133,11 +133,29 @@
     <!--通过ID查询页面-->
     <select id="selectPageByPrimaryKey" resultMap="ResultContentsInfo" parameterType="java.lang.Integer">
         SELECT
-        contents.*,
-        users.uid,
-        users.screenName
-         from contents,users
-        where contents.authorid=user.uid and contents. contents.cid=#{cid,jdbcType=INTEGER}
+	contents.*,
+	users.uid,
+	users.screenName,
+	comments.coid,
+	comments.created,
+	comments.author AS coauthor,
+	comments.authorId AS coauthorId,
+	comments.ownerId,
+	comments.mail,
+	comments.url,
+	comments.ip,
+	comments.agent,
+	comments.text AS cotext,
+	comments.type AS cotype,
+	comments.`status` AS costatus,
+	comments.parent AS coparent
+FROM
+	contents
+	LEFT JOIN comments ON contents.cid = comments.cid,
+	users
+WHERE
+	contents.authorid = users.uid
+	AND contents.cid =#{cid,jdbcType=INTEGER}
     </select>
     <!--通过ID删除文章-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
