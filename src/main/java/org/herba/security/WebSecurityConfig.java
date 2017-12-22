@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -30,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userSecurityService());
+        auth.userDetailsService(userSecurityService()).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Autowired
@@ -39,12 +40,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected AuthenticationFailureHandler formAuthenticationFailureHandler;
     @Autowired
     protected LogoutSuccessHandler formLogoutSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 //权限名不带ROLE,自动增加前缀
-                .antMatchers("/css/**", "/font/**","/admin/login","/admin/post/**","/admin/page/**","/getImage/**","/getFile/**").permitAll()
+                .antMatchers("/css/**", "/font/**", "/admin/login", "/admin/post/**", "/admin/page/**", "/admin/mid/**", "/admin/tags", "/admin/categorys", "/getImage/**", "/getFile/**","/admin/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

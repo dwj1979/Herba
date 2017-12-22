@@ -47,8 +47,25 @@ public class ContentService {
      * @return
      */
     public PageInfo selectPost(int pageNo, int pageSize) {
+        List<ContentsInfo> contentsInfoList;
         PageHelper.startPage(pageNo, pageSize);
-        List<ContentsInfo> contentsInfoList = comtentsMapper.selectPost();
+        contentsInfoList = comtentsMapper.selectPost();
+        PageInfo page = new PageInfo(contentsInfoList);
+        return page;
+    }
+
+    /**
+     * selectPost   查询文章重载
+     *
+     * @param pageNo   页号
+     * @param pageSize 页码
+     * @param relationships 关系
+     * @return
+     */
+    public PageInfo selectPost(int pageNo, int pageSize, Relationships relationships) {
+        List<ContentsInfo> contentsInfoList;
+        PageHelper.startPage(pageNo, pageSize);
+        contentsInfoList = comtentsMapper.selectPostByKey(relationships);
         PageInfo page = new PageInfo(contentsInfoList);
         return page;
     }

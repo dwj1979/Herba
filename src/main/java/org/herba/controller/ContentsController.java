@@ -6,6 +6,7 @@ import org.herba.model.dto.ContentDetail;
 import org.herba.model.dto.ContentSave;
 import org.herba.model.dto.ContentsInfo;
 import org.herba.model.entity.Metas;
+import org.herba.model.entity.Relationships;
 import org.herba.service.ContentService;
 
 import org.herba.service.MetaService;
@@ -40,7 +41,7 @@ public class ContentsController {
     MetaService metaService;
 
     /**
-     * getPostByPage   根据分页获得文章或页面列表信息信息
+     * getPostByPage   根据分页获得文章或页面列表信息
      *
      * @param type   请求页面类型
      * @param pageNo 请求页数
@@ -51,10 +52,25 @@ public class ContentsController {
         PageInfo pageInfo = new PageInfo();
         if (type.equals("post")) {
             pageInfo = contentService.selectPost(pageNo, 5);
-
         } else {
             pageInfo = contentService.selectPage(pageNo, 5);
         }
+        return pageInfo;
+    }
+
+    /**
+     * getPostByPage   根据分页和元素id获得文章列表信息
+     *
+     * @param mid  元素id
+     * @param pageNo 请求页数
+     * @return
+     */
+    @RequestMapping(value = "/admin/mid/{mid}/{pageNo}")
+    public PageInfo getPostByPageAndMid(@PathVariable int pageNo, @PathVariable int mid,HttpServletRequest request, HttpServletResponse response) {
+        PageInfo pageInfo = new PageInfo();
+        Relationships relationships = new Relationships();
+        relationships.setMid(mid);
+        pageInfo = contentService.selectPost(pageNo, 5, relationships);
         return pageInfo;
     }
 

@@ -3,6 +3,7 @@ package org.herba.model.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.herba.model.dto.ContentsInfo;
 import org.herba.model.entity.Contents;
+import org.herba.model.entity.Relationships;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -51,13 +52,18 @@ public interface ContentsMapper {
      * @return
      */
     ContentsInfo selectPageByPrimaryKey(Integer cid);
-
     /**
      * selectPost      查询文章信息
      *
      * @return
      */
     List<ContentsInfo> selectPost();
+    /**
+     * selectPostByKey      根据key查询文章信息
+     *
+     * @return
+     */
+    List<ContentsInfo> selectPostByKey(Relationships relationships);
 
     /**
      * selectPage       查询页面信息
@@ -65,14 +71,6 @@ public interface ContentsMapper {
      * @return
      */
     List<ContentsInfo> selectPage();
-
-    /**
-     * updateByPrimaryKey   根据ID更新除内容以外的其他字段
-     *
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKey(Contents record);
 
     /**
      * updateByPrimaryKeySelective  根据ID更新文章部分字段

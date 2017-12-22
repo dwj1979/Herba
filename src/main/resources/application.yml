@@ -10,7 +10,7 @@ spring:
   application:
     name: blog
   datasource:
-    url:  jdbc:mysql://103.73.49.126:3306/herba?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url:  jdbc:mysql://107.175.220.10:3306/herba?useUnicode=true&characterEncoding=utf-8&useSSL=false
 #    数据库驱动类
 #    driver-class-name: org.mariadb.jdbc.Driver
     driver-class-name: com.mysql.cj.jdbc.Driver

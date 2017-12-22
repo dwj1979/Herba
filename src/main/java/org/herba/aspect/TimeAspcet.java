@@ -16,8 +16,7 @@ import java.util.Date;
 @Aspect
 @Component
 public class TimeAspcet {
-    @Autowired
-    private static final Logger logger = LoggerFactory.getLogger(TimeAspcet.class);
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Around("execution(* org.herba.controller.*.*(..))")
     public Object handleControllerMethod(ProceedingJoinPoint pjp) throws Throwable {

@@ -68,7 +68,26 @@
         and contents.`type` = 'post'
         and contents.authorId =users.uid
         and metas.type = 'category'
-        ORDER  by contents.created desc
+        ORDER by contents.created desc
+    </select>
+    <!--根据key查询文章信息-->
+    <select id="selectPostByKey" resultMap="ResultContentsInfo" parameterType="org.herba.model.entity.Relationships">
+        select
+        contents.*,
+        metas.mid,
+        metas.name mname,
+        users.uid,
+        users.screenName
+        from
+        contents,metas,relationships,users
+        where
+        contents.cid = relationships.cid and relationships.mid = metas.mid
+        and contents.`type` = 'post'
+        and contents.authorId =users.uid
+        <if test="mid != null">
+            and metas.mid=#{mid,jdbcType=INTEGER}
+        </if>
+        ORDER by contents.created desc
     </select>
     <!--查询页面信息-->
     <select id="selectPage" resultMap="ResultContentsInfo">
@@ -335,27 +354,4 @@ WHERE
         </set>
         where cid = #{cid,jdbcType=INTEGER}
     </update>
-    <!--根据ID更新文章全部字段-->
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.herba.model.entity.Contents">
-    update contents
-    set title = #{title,jdbcType=VARCHAR},
-      slug = #{slug,jdbcType=VARCHAR},
-      created = #{created,jdbcType=INTEGER},
-      modified = #{modified,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
-      authorId = #{authorId,jdbcType=INTEGER},
-      template = #{template,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      commentsNum = #{commentsNum,jdbcType=INTEGER},
-      allowComment = #{allowComment,jdbcType=CHAR},
-      allowPing = #{allowPing,jdbcType=CHAR},
-      allowFeed = #{allowFeed,jdbcType=CHAR},
-      parent = #{parent,jdbcType=INTEGER},
-      viewsNum = #{viewsNum,jdbcType=INTEGER},
-      views = #{views,jdbcType=INTEGER},
-      text = #{text,jdbcType=LONGVARCHAR}
-    where cid = #{cid,jdbcType=INTEGER}
-  </update>
 </mapper>
