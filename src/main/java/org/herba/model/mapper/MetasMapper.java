@@ -8,10 +8,10 @@ import java.util.List;
 
 @Component
 @Mapper
-public interface MetasMapper {
+public interface MetasMapper { 
     int deleteByPrimaryKey(Integer mid);
 
-    int insert(Metas record);
+//    int insert(Metas record);
 
     int insertSelective(Metas record);
 
@@ -19,9 +19,7 @@ public interface MetasMapper {
 
     Metas selectByPrimaryKey(Integer mid);
 
-    List<Metas> selectAll();
+    List<Metas> selectByKey(Metas meta);
 
     int updateByPrimaryKeySelective(Metas record);
-
-    int updateByPrimaryKey(Metas record);
 }

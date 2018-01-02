@@ -20,24 +20,27 @@
         from metas
         where mid = #{mid,jdbcType=INTEGER}
     </select>
-    <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectByKey" resultMap="BaseResultMap" parameterType="org.herba.model.entity.Metas">
         select
         <include refid="Base_Column_List"/>
         from metas
+        <where>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="parent != null">
+                and parent = #{parent,jdbcType=INTEGER}
+            </if>
+            <if test="name != null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from metas
     where mid = #{mid,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="org.herba.model.entity.Metas">
-    insert into metas (mid, name, slug, 
-      type, description, count, 
-      order, parent)
-    values (#{mid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{slug,jdbcType=VARCHAR}, 
-      #{type,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, 
-      #{order,jdbcType=INTEGER}, #{parent,jdbcType=INTEGER})
-  </insert>
-    <insert id="insertSelective" parameterType="org.herba.model.entity.Metas" useGeneratedKeys="true"  keyProperty="mid">
+    <insert id="insertSelective" parameterType="org.herba.model.entity.Metas" useGeneratedKeys="true" keyProperty="mid">
         insert into metas
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -86,17 +89,17 @@
             </if>
         </trim>
     </insert>
-    <insert id="insertSelectiveMultiple" parameterType="java.util.ArrayList" useGeneratedKeys="true"  keyProperty="mid">
+    <insert id="insertSelectiveMultiple" parameterType="java.util.ArrayList" useGeneratedKeys="true" keyProperty="mid">
         insert into metas (`name`,slug,`type`,description,`count`,`order`,`parent`)
         <foreach collection="list" item="item" index="index" separator=",">
             <trim prefix="values (" suffix=")" suffixOverrides=",">
-                    #{item.name,jdbcType=VARCHAR},
-                    #{item.slug,jdbcType=VARCHAR},
-                    #{item.type,jdbcType=VARCHAR},
-                    #{item.description,jdbcType=VARCHAR},
-                    #{item.count,jdbcType=INTEGER},
-                    #{item.order,jdbcType=INTEGER},
-                    #{item.parent,jdbcType=INTEGER},
+                #{item.name,jdbcType=VARCHAR},
+                #{item.slug,jdbcType=VARCHAR},
+                #{item.type,jdbcType=VARCHAR},
+                #{item.description,jdbcType=VARCHAR},
+                #{item.count,jdbcType=INTEGER},
+                #{item.order,jdbcType=INTEGER},
+                #{item.parent,jdbcType=INTEGER},
             </trim>
         </foreach>
     </insert>
@@ -119,7 +122,7 @@
                 count = #{count,jdbcType=INTEGER},
             </if>
             <if test="order != null">
-                order = #{order,jdbcType=INTEGER},
+                `order` = #{order,jdbcType=INTEGER},
             </if>
             <if test="parent != null">
                 parent = #{parent,jdbcType=INTEGER},
@@ -127,15 +130,4 @@
         </set>
         where mid = #{mid,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="org.herba.model.entity.Metas">
-    update metas
-    set name = #{name,jdbcType=VARCHAR},
-      slug = #{slug,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      count = #{count,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
-      parent = #{parent,jdbcType=INTEGER}
-    where mid = #{mid,jdbcType=INTEGER}
-  </update>
 </mapper>

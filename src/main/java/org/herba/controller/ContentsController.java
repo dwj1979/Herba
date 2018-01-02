@@ -41,32 +41,40 @@ public class ContentsController {
     MetaService metaService;
 
     /**
-     * getPostByPage   根据分页获得文章或页面列表信息
+     * getPostByPage   根据分页获得文章列表信息
      *
-     * @param type   请求页面类型
      * @param pageNo 请求页数
      * @return
      */
-    @RequestMapping(value = "/admin/{type}/page/{pageNo}")
-    public PageInfo getPostByPage(@PathVariable int pageNo, @PathVariable String type, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/admin/post/page/{pageNo}")
+    public PageInfo getPostByPage(@PathVariable int pageNo) {
         PageInfo pageInfo = new PageInfo();
-        if (type.equals("post")) {
-            pageInfo = contentService.selectPost(pageNo, 5);
-        } else {
-            pageInfo = contentService.selectPage(pageNo, 5);
-        }
+        pageInfo = contentService.selectPost(pageNo, 5);
+        return pageInfo;
+    }
+
+    /**
+     * getPageByPage   根据分页获得页面列表信息
+     *
+     * @param pageNo 请求页数
+     * @return
+     */
+    @RequestMapping(value = "/admin/page/page/{pageNo}")
+    public PageInfo getPageByPage(@PathVariable int pageNo) {
+        PageInfo pageInfo = new PageInfo();
+        pageInfo = contentService.selectPage(pageNo, 5);
         return pageInfo;
     }
 
     /**
      * getPostByPage   根据分页和元素id获得文章列表信息
      *
-     * @param mid  元素id
+     * @param mid    元素id
      * @param pageNo 请求页数
      * @return
      */
     @RequestMapping(value = "/admin/mid/{mid}/{pageNo}")
-    public PageInfo getPostByPageAndMid(@PathVariable int pageNo, @PathVariable int mid,HttpServletRequest request, HttpServletResponse response) {
+    public PageInfo getPostByPageAndMid(@PathVariable int pageNo, @PathVariable int mid) {
         PageInfo pageInfo = new PageInfo();
         Relationships relationships = new Relationships();
         relationships.setMid(mid);
@@ -75,40 +83,44 @@ public class ContentsController {
     }
 
     /**
-     * getPostById   根据Id获得文章或信息
+     * getPostById   根据Id获得文章信息
      *
-     * @param type 请求页面类型
-     * @param cid  文章ID
+     * @param cid 文章ID
      * @return
      */
-    @RequestMapping(value = "/admin/{type}/{cid}")
-    public ContentDetail getPostById(@PathVariable int cid, @PathVariable String type, HttpServletRequest request, HttpServletResponse response) {
-        ContentDetail contentDetail = new ContentDetail();
-        if (type.equals("post")) {
-            ContentsInfo contentsInfo = contentService.selectPostByPrimaryKey(cid);
-            List<Metas> metasList = metaService.selectAll();
-            contentDetail.setContentsInfo(contentsInfo);
-            contentDetail.setMetas(metasList);
-
-        } else {
-            ContentsInfo contentsInfo = contentService.selectPageByPrimaryKey(cid);
-            contentDetail.setContentsInfo(contentsInfo);
-        }
-        return contentDetail;
+    @RequestMapping(value = "/admin/post/{cid}")
+    public ContentsInfo getPostById(@PathVariable int cid) {
+        return contentService.selectPostByPrimaryKey(cid);
     }
 
     /**
-     * saveContent   保存文章或者页面
+     * getPageById   根据Id获得页面信息
      *
-     * @param type 请求页面类型
+     * @param cid 页面ID
      * @return
      */
-    @RequestMapping(value = "/admin/save/{type}")
-    public void saveContent(@PathVariable String type, @RequestBody ContentSave contents, HttpServletRequest request, HttpServletResponse response) {
-        if (type.equals("post")) {
-            contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
-        } else {
-            contentService.savePage(contents.getContents());
-        }
+    @RequestMapping(value = "/admin/page/{cid}")
+    public ContentsInfo getPageById(@PathVariable int cid) {
+        return contentService.selectPageByPrimaryKey(cid);
     }
+
+    /**
+     * savePost   保存文章
+     *
+     * @return
+     */
+    @RequestMapping(value = "/admin/save/post")
+    public void savePost(@RequestBody ContentSave contents) {
+            contentService.savePost(contents.getContents(), contents.getCategorysKey(), contents.getTags());
+    }
+    /**
+     * savePage   保存页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/admin/save/page")
+    public void savePage(@RequestBody ContentSave contents) {
+        contentService.savePage(contents.getContents());
+    }
+
 }

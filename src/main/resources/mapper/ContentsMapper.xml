@@ -241,7 +241,7 @@ WHERE
                 #{title,jdbcType=VARCHAR},
             </if>
             <if test="slug != null">
-                #{slug,jdbcType=VARCHAR},
+                #{slug,jdbcType= },
             </if>
             <if test="created != null">
                 #{created,jdbcType=INTEGER},

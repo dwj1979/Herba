@@ -116,7 +116,7 @@ public class ContentService {
     public void savePost(Contents contents, int categorysKey, List<Metas> tags) {
         int code = 0;
         //新增标签
-        List<Metas> addTags = new ArrayList<Metas>();
+        List<Metas> addTags = new ArrayList<>();
         //目前文章所含标签关系
         List<Relationships> relationshipsList = new ArrayList<>();
         //目前文章所含新增标签关系
