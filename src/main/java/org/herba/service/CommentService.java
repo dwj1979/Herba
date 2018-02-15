@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class CommentService {
     @Autowired
@@ -30,5 +32,13 @@ public class CommentService {
         contents.setCid(comments.getCid());
         contents.setCommentsNum(++commentsNum);
         contentsMapper.updateByPrimaryKeySelective(contents);
+    }
+
+    /**
+     * selectComment 获取全量评论
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public List<Comments> selectComment() {
+        return commentsMapper.selectComment();
     }
 }

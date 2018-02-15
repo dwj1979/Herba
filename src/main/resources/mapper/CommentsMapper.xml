@@ -219,4 +219,8 @@
       parent = #{parent,jdbcType=INTEGER}
     where coid = #{coid,jdbcType=INTEGER}
   </update>
+  <!--查询评论信息-->
+  <select id="selectComment" resultMap="BaseResultMap">
+    SELECT * FROM comments order by created desc
+  </select>
 </mapper>

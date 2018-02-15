@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.herba.model.entity.Comments;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Mapper
 public interface CommentsMapper {
@@ -20,4 +22,6 @@ public interface CommentsMapper {
     int updateByPrimaryKeyWithBLOBs(Comments record);
 
     int updateByPrimaryKey(Comments record);
+
+    List<Comments> selectComment();
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class CommentsController {
 
@@ -15,5 +17,10 @@ public class CommentsController {
     @RequestMapping(value = "/admin/save/comment")
     public void saveComment(@RequestBody Comments comments) {
         commentService.insertComment(comments);
+    }
+
+    @RequestMapping(value = "admin/comments")
+    public List<Comments> getComment() {
+        return commentService.selectComment();
     }
 }
