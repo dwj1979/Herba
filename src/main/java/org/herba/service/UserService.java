@@ -13,4 +13,7 @@ public class UserService {
     public void register(Users users) {
         usersMapper.insertSelective(users);
     }
+    public Users selectByUsername(String username) {
+        return  usersMapper.selectByParams(new Users(username)).get(0);
+    }
 }
