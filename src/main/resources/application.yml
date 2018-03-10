@@ -52,6 +52,8 @@ herba.file.fileDownloadApi: http://192.168.50.224:8081/getFile/
 logging:
   level: info
   level.org.herba.model.mapper: debug
+  level.org.springframework.security: debug
+  file: ../spring-boot.log
 security:
   oauth2:
     resource:
