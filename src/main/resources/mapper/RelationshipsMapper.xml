@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.herba.model.mapper.RelationshipsMapper">
-    <resultMap id="BaseResultMap" type="org.herba.model.entity.Relationships">
+<mapper namespace="com.herba.model.mapper.RelationshipsMapper">
+    <resultMap id="BaseResultMap" type="com.herba.model.entity.Relationships">
         <id column="cid" property="cid" jdbcType="INTEGER"/>
         <id column="mid" property="mid" jdbcType="INTEGER"/>
     </resultMap>
-    <delete id="deleteByPrimaryKey" parameterType="org.herba.model.entity.Relationships">
+    <delete id="deleteByPrimaryKey" parameterType="com.herba.model.entity.Relationships">
     delete from relationships
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
@@ -25,7 +25,7 @@
             #{item.cid}
         </foreach>
     </delete>
-    <insert id="insert" parameterType="org.herba.model.entity.Relationships">
+    <insert id="insert" parameterType="com.herba.model.entity.Relationships">
     insert into relationships (cid, mid)
     values (#{cid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER})
   </insert>
@@ -36,7 +36,7 @@
             (#{item.cid,jdbcType=INTEGER}, #{item.mid,jdbcType=INTEGER})
         </foreach>
     </insert>
-    <update id="updateCategoryByPrimaryKey" parameterType="org.herba.model.entity.Relationships">
+    <update id="updateCategoryByPrimaryKey" parameterType="com.herba.model.entity.Relationships">
         update relationships
         set mid = #{mid,jdbcType=INTEGER}
         where cid = #{cid,jdbcType=INTEGER} and mid not in (select mid from metas where metas.type = "tag")

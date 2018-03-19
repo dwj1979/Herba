@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.herba.model.mapper.UsersMapper" >
-  <resultMap id="BaseResultMap" type="org.herba.model.entity.Users" >
+<mapper namespace="com.herba.model.mapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.herba.model.entity.Users" >
     <id column="uid" property="uid" jdbcType="INTEGER"  javaType="int"/>
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     where uid = #{uid,jdbcType=INTEGER}
   </select>
 
-  <select id="selectByParams" resultMap="BaseResultMap" parameterType="org.herba.model.entity.Users" >
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.herba.model.entity.Users" >
     select
     <include refid="Base_Column_List" />
     from users
@@ -70,7 +70,7 @@
     delete from users
     where uid = #{uid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.herba.model.entity.Users" >
+  <insert id="insert" parameterType="com.herba.model.entity.Users" >
     insert into users (uid, name, password,
       mail, url, screenName,
       created, activated, logged,
@@ -82,7 +82,7 @@
       #{group,jdbcType=VARCHAR}, #{authCode,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.herba.model.entity.Users" >
+  <insert id="insertSelective" parameterType="com.herba.model.entity.Users" >
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uid != null" >
@@ -155,7 +155,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.herba.model.entity.Users" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.herba.model.entity.Users" >
     update users
     <set >
       <if test="name != null" >
@@ -191,7 +191,7 @@
     </set>
     where uid = #{uid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.herba.model.entity.Users" >
+  <update id="updateByPrimaryKey" parameterType="com.herba.model.entity.Users" >
     update users
     set name = #{name,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},

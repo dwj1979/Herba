@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.herba.model.mapper.CommentsMapper" >
-  <resultMap id="BaseResultMap" type="org.herba.model.entity.Comments" >
+<mapper namespace="com.herba.model.mapper.CommentsMapper" >
+  <resultMap id="BaseResultMap" type="com.herba.model.entity.Comments" >
     <id column="coid" property="coid" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="INTEGER" />
     <result column="created" property="created" jdbcType="INTEGER" />
@@ -16,7 +16,7 @@
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="parent" property="parent" jdbcType="INTEGER" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="org.herba.model.entity.Comments" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.herba.model.entity.Comments" extends="BaseResultMap" >
     <result column="text" property="text" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -38,7 +38,7 @@
     delete from comments
     where coid = #{coid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.herba.model.entity.Comments" >
+  <insert id="insert" parameterType="com.herba.model.entity.Comments" >
     insert into comments (coid, cid, created, 
       author, authorId, ownerId, 
       mail, url, ip, agent, 
@@ -50,7 +50,7 @@
       #{type,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{parent,jdbcType=INTEGER}, 
       #{text,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.herba.model.entity.Comments" >
+  <insert id="insertSelective" parameterType="com.herba.model.entity.Comments" >
     insert into comments
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="coid != null" >
@@ -141,7 +141,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.herba.model.entity.Comments" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.herba.model.entity.Comments" >
     update comments
     <set >
       <if test="cid != null" >
@@ -186,7 +186,7 @@
     </set>
     where coid = #{coid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.herba.model.entity.Comments" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.herba.model.entity.Comments" >
     update comments
     set cid = #{cid,jdbcType=INTEGER},
       created = #{created,jdbcType=INTEGER},
@@ -203,7 +203,7 @@
       text = #{text,jdbcType=LONGVARCHAR}
     where coid = #{coid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.herba.model.entity.Comments" >
+  <update id="updateByPrimaryKey" parameterType="com.herba.model.entity.Comments" >
     update comments
     set cid = #{cid,jdbcType=INTEGER},
       created = #{created,jdbcType=INTEGER},

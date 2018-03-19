@@ -5,7 +5,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: org.herba.model.entity
+  type-aliases-package: com.herba.model.entity
 spring:
   application:
     name: blog
@@ -51,7 +51,7 @@ herba.file.imageShowApi: http://192.168.50.224:8081/getImage/
 herba.file.fileDownloadApi: http://192.168.50.224:8081/getFile/
 logging:
   level: info
-  level.org.herba.model.mapper: debug
+  level.com.herba.model.mapper: debug
   level.org.springframework.security: debug
   file: ../spring-boot.log
 security:

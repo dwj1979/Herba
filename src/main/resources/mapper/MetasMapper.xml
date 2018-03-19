@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.herba.model.mapper.MetasMapper">
-    <resultMap id="BaseResultMap" type="org.herba.model.entity.Metas">
+<mapper namespace="com.herba.model.mapper.MetasMapper">
+    <resultMap id="BaseResultMap" type="com.herba.model.entity.Metas">
         <id column="mid" property="mid" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="slug" property="slug" jdbcType="VARCHAR"/>
@@ -20,7 +20,7 @@
         from metas
         where mid = #{mid,jdbcType=INTEGER}
     </select>
-    <select id="selectByKey" resultMap="BaseResultMap" parameterType="org.herba.model.entity.Metas">
+    <select id="selectByKey" resultMap="BaseResultMap" parameterType="com.herba.model.entity.Metas">
         select
         <include refid="Base_Column_List"/>
         from metas
@@ -40,7 +40,7 @@
     delete from metas
     where mid = #{mid,jdbcType=INTEGER}
   </delete>
-    <insert id="insertSelective" parameterType="org.herba.model.entity.Metas" useGeneratedKeys="true" keyProperty="mid">
+    <insert id="insertSelective" parameterType="com.herba.model.entity.Metas" useGeneratedKeys="true" keyProperty="mid">
         insert into metas
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -103,7 +103,7 @@
             </trim>
         </foreach>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="org.herba.model.entity.Metas">
+    <update id="updateByPrimaryKeySelective" parameterType="com.herba.model.entity.Metas">
         update metas
         <set>
             <if test="name != null">

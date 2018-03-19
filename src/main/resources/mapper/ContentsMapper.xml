@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.herba.model.mapper.ContentsMapper">
-    <resultMap id="ResultContentsInfo" type="org.herba.model.dto.ContentsInfo">
+<mapper namespace="com.herba.model.mapper.ContentsMapper">
+    <resultMap id="ResultContentsInfo" type="com.herba.model.dto.ContentsInfo">
         <id column="cid" property="cid" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="slug" property="slug" jdbcType="VARCHAR"/>
@@ -21,16 +21,16 @@
         <result column="viewsNum" property="viewsNum" jdbcType="INTEGER"/>
         <result column="views" property="views" jdbcType="INTEGER"/>
         <result column="text" property="text" jdbcType="LONGVARCHAR"/>
-        <association property="users" javaType="org.herba.model.entity.Users">
+        <association property="users" javaType="com.herba.model.entity.Users">
             <result column="uid" property="uid" jdbcType="INTEGER"/>
             <result column="screenName" property="screenName" jdbcType="VARCHAR"/>
         </association>
-        <collection property="metas" ofType="org.herba.model.entity.Metas">
+        <collection property="metas" ofType="com.herba.model.entity.Metas">
             <result column="mid" property="mid" jdbcType="INTEGER"/>
             <result column="mname" property="name" jdbcType="VARCHAR"/>
             <result column="mtype" property="type" jdbcType="VARCHAR"/>
         </collection>
-        <collection property="comments" ofType="org.herba.model.entity.Comments">
+        <collection property="comments" ofType="com.herba.model.entity.Comments">
             <result column="coid" property="coid" jdbcType="INTEGER"/>
             <result column="cocreated" property="created" jdbcType="INTEGER"/>
             <result column="coauthor" property="author" jdbcType="VARCHAR"/>
@@ -70,25 +70,6 @@
         and metas.type = 'category'
         ORDER by contents.created desc
     </select>
-    <!--根据key查询文章信息-->
-    <select id="selectPostByKey" resultMap="ResultContentsInfo" parameterType="org.herba.model.entity.Relationships">
-        select
-        contents.*,
-        metas.mid,
-        metas.name mname,
-        users.uid,
-        users.screenName
-        from
-        contents,metas,relationships,users
-        where
-        contents.cid = relationships.cid and relationships.mid = metas.mid
-        and contents.`type` = 'post'
-        and contents.authorId =users.uid
-        <if test="mid != null">
-            and metas.mid=#{mid,jdbcType=INTEGER}
-        </if>
-        ORDER by contents.created desc
-    </select>
     <!--查询页面信息-->
     <select id="selectPage" resultMap="ResultContentsInfo">
         select
@@ -106,6 +87,25 @@
         where
         contents.`type` = 'page'
         and contents.authorId    =users.uid
+    </select>
+    <!--根据分类或者标签查询文章信息-->
+    <select id="selectPostByMeta" resultMap="ResultContentsInfo" parameterType="com.herba.model.entity.Relationships">
+        select
+        contents.*,
+        metas.mid,
+        metas.name mname,
+        users.uid,
+        users.screenName
+        from
+        contents,metas,relationships,users
+        where
+        contents.cid = relationships.cid and relationships.mid = metas.mid
+        and contents.`type` = 'post'
+        and contents.authorId =users.uid
+        <if test="mid != null">
+            and metas.mid=#{mid,jdbcType=INTEGER}
+        </if>
+        ORDER by contents.created desc
     </select>
     <!--通过ID查询文章-->
     <select id="selectPostByPrimaryKey" resultMap="ResultContentsInfo" parameterType="java.lang.Integer">
@@ -170,8 +170,8 @@ WHERE
     delete from contents
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
-    <!--新增文章部分字段-->
-    <insert id="insertSelective" parameterType="org.herba.model.entity.Contents" useGeneratedKeys="true"
+    <!--新增文章-->
+    <insert id="insertSelective" parameterType="com.herba.model.entity.Contents" useGeneratedKeys="true"
             keyProperty="cid">
         insert into contents
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -293,8 +293,8 @@ WHERE
             </if>
         </trim>
     </insert>
-    <!--根据ID更新文章部分字段-->
-    <update id="updateByPrimaryKeySelective" parameterType="org.herba.model.entity.Contents">
+    <!--根据ID更新文章-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.herba.model.entity.Contents">
         update contents
         <set>
             <if test="title != null">
