@@ -193,4 +193,29 @@ public class Contents {
     public void setText(String text) {
         this.text = text;
     }
+
+    public Contents(Integer cid, String title, String slug, Integer created, Integer modified, Integer order, Integer authorId, String template, String type, String status, String password, Integer commentsNum, String allowComment, String allowPing, String allowFeed, Integer parent, Integer viewsNum, Integer views, String text) {
+        this.cid = cid;
+        this.title = title;
+        this.slug = slug;
+        this.created = created;
+        this.modified = modified;
+        this.order = order;
+        this.authorId = authorId;
+        this.template = template;
+        this.type = type;
+        this.status = status;
+        this.password = password;
+        this.commentsNum = commentsNum;
+        this.allowComment = allowComment;
+        this.allowPing = allowPing;
+        this.allowFeed = allowFeed;
+        this.parent = parent;
+        this.viewsNum = viewsNum;
+        this.views = views;
+        this.text = text;
+    }
+
+    public Contents() {
+    }
 }

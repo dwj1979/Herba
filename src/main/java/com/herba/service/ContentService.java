@@ -1,6 +1,7 @@
 package com.herba.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.github.pagehelper.PageHelper;
@@ -9,10 +10,13 @@ import com.herba.model.dto.ContentsInfo;
 import com.herba.model.entity.Contents;
 import com.herba.model.entity.Metas;
 import com.herba.model.entity.Relationships;
+import com.herba.model.entity.Users;
 import com.herba.model.mapper.ContentsMapper;
 
 import com.herba.model.mapper.MetasMapper;
 import com.herba.model.mapper.RelationshipsMapper;
+import com.herba.model.mapper.UsersMapper;
+import com.herba.spider.SpiderContents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +40,8 @@ public class ContentService {
     RelationshipsMapper relationshipsMapper;
     @Autowired
     MetasMapper metasMapper;
-
+    @Autowired
+    UsersMapper usersMapper;
 
     /**
      * selectPost   查询文章
@@ -56,8 +61,8 @@ public class ContentService {
     /**
      * selectPost   根据meta查询文章信息
      *
-     * @param pageNo   页号
-     * @param pageSize 页码
+     * @param pageNo        页号
+     * @param pageSize      页码
      * @param relationships 关系
      * @return
      */
@@ -103,6 +108,44 @@ public class ContentService {
         return comtentsMapper.selectPageByPrimaryKey(cid);
     }
 
+    /**
+     * savePostBySpider  爬虫保存文章信息
+     *
+     * @param spiderContents 爬虫页面信息
+     * @param catgory        分类ID
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void savePostBySpider(SpiderContents spiderContents, Metas catgory) {
+        //        转为标准Content模型
+        Users users = new Users();
+        users.setName("spider");
+        users = usersMapper.selectByParams(users).get(0);
+        Contents contents = new Contents(null,
+                spiderContents.getTitle(),
+                null,
+                (int) new Date().getTime(),
+                (int) new Date().getTime(),
+                0,
+                users.getUid(),
+                null,
+                "post",
+                "publish",
+                null,
+                0,
+                "1",
+                "1",
+                "1",
+                1,0,0,spiderContents.getText());
+
+        comtentsMapper.insertSelective(contents);
+        contents.setSlug(contents.getCid().toString());
+        //更新slug
+        comtentsMapper.updateByPrimaryKeySelective(contents);
+        if (catgory.getMid() == null) {
+            metasMapper.insertSelective(catgory);
+        }
+        relationshipsMapper.insert(new Relationships(contents.getCid(), catgory.getMid()));
+    }
 
     /**
      * savePost  保存文章信息
@@ -144,7 +187,7 @@ public class ContentService {
             //给新增加的标签添加mid
             if (addTags.size() != 0) {
                 for (Metas tag : addTags) {
-                    int mid = metasMapper.insertSelective(tag);
+                    metasMapper.insertSelective(tag);
                     addRelationshipsList.add(new Relationships(contents.getCid(), tag.getMid()));
                 }
             }

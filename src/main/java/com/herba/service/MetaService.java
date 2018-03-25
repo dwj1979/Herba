@@ -52,7 +52,18 @@ public class MetaService {
         PageInfo page = new PageInfo(metasList);
         return page;
     }
-
+    /**
+     * selectCategoryByName   通过分类名字查找分类
+     *
+     * @param name   分类名字
+     * @return
+     */
+    public Metas selectCategoryByName(String name) {
+        Metas metas=new Metas();
+        metas.setName(name);
+        metas.setType("category");
+        return  metasMapper.selectByKey(metas).get(0);
+    }
     /**
      * selectCategoryBymid   通过id查询分类
      *
