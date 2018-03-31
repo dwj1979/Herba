@@ -45,7 +45,8 @@ public class Oauth2Config {
                     .authorizeRequests()
                     .antMatchers("/oauth/token","/css/**", "/font/**", "/admin/login", "/admin/post/**",
                             "/admin/page/**", "/admin/mid/**", "/admin/tags", "/admin/categorys",
-                            "/admin/category/**", "/getImage/**", "/getFile/**","/admin/register","/admin/comments","/oauth/token").permitAll()
+                            "/admin/category/**", "/getImage/**", "/getFile/**","/admin/register",
+                            "/admin/comments","/oauth/token").permitAll()
                     .anyRequest().authenticated();
             ;
         }
