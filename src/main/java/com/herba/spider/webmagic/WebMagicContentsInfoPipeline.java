@@ -1,4 +1,4 @@
-package com.herba.spider;
+package com.herba.spider.webmagic;
 
 import com.herba.model.entity.Metas;
 import com.herba.service.ContentService;
@@ -11,7 +11,7 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 
 
 @Component
-public class SpiderContentsInfoPipeline implements Pipeline {
+public class WebMagicContentsInfoPipeline implements Pipeline {
     @Autowired
     ContentService contentService;
     @Autowired
@@ -21,8 +21,8 @@ public class SpiderContentsInfoPipeline implements Pipeline {
      * */
     @Override
     public void process(ResultItems resultItems, Task task) {
-        SpiderContents spiderContents = (SpiderContents) resultItems.get("repo");
+        WebMagicContents webMagicContents = (WebMagicContents) resultItems.get("repo");
         Metas metas = metaService.selectCategoryByName("爬虫");
-        contentService.savePostBySpider(spiderContents, metas);
+        contentService.savePostByWebMagicSpider(webMagicContents, metas);
     }
 }

@@ -16,7 +16,7 @@ import com.herba.model.mapper.ContentsMapper;
 import com.herba.model.mapper.MetasMapper;
 import com.herba.model.mapper.RelationshipsMapper;
 import com.herba.model.mapper.UsersMapper;
-import com.herba.spider.SpiderContents;
+import com.herba.spider.webmagic.WebMagicContents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,17 +111,17 @@ public class ContentService {
     /**
      * savePostBySpider  爬虫保存文章信息
      *
-     * @param spiderContents 爬虫页面信息
+     * @param webMagicContents 爬虫页面信息
      * @param catgory        分类ID
      */
     @Transactional(rollbackFor = Exception.class)
-    public void savePostBySpider(SpiderContents spiderContents, Metas catgory) {
+    public void savePostByWebMagicSpider(WebMagicContents webMagicContents, Metas catgory) {
         //        转为标准Content模型
         Users users = new Users();
         users.setName("spider");
         users = usersMapper.selectByParams(users).get(0);
         Contents contents = new Contents(null,
-                spiderContents.getTitle(),
+                webMagicContents.getTitle(),
                 null,
                 (int) new Date().getTime(),
                 (int) new Date().getTime(),
@@ -135,7 +135,7 @@ public class ContentService {
                 "1",
                 "1",
                 "1",
-                1,0,0,spiderContents.getText());
+                1,0,0, webMagicContents.getText());
 
         comtentsMapper.insertSelective(contents);
         contents.setSlug(contents.getCid().toString());

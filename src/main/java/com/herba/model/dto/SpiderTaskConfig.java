@@ -3,7 +3,7 @@ package com.herba.model.dto;
 import lombok.Data;
 
 @Data
-public class SpiderTask {
+public class SpiderTaskConfig {
     private  String startUrl;
     private  String urlRule;
     private  String titleRule;
