@@ -1,4 +1,5 @@
 # Herba Blog
+[![Build Status](https://travis-ci.org/Alkaids/Herba.svg?branch=master)](https://travis-ci.org/Alkaids/Herba)
 * [简介](#简介)
 * [技术栈](#技术栈)
 * [功能](#功能)
