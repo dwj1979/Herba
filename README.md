@@ -1,6 +1,6 @@
 # Herba Blog
 [![Build Status](https://travis-ci.org/Alkaids/Herba.svg?branch=master)](https://travis-ci.org/Alkaids/Herba)
-[![Build Status](http://95.216.9.60:8080/buildStatus/icon?job=herba)](http://95.216.9.60:8080/job/herba/)
+[![Build Status](https://jenkins.alkaids.com/buildStatus/icon?job=herba)](https://jenkins.alkaids.com/job/herba/)
 * [简介](#简介)
 * [技术栈](#技术栈)
 * [功能](#功能)
