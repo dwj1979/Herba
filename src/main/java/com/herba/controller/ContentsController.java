@@ -11,6 +11,8 @@ import com.herba.service.MetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 /**
  * ContentsController   文章api控制器
@@ -120,5 +122,26 @@ public class ContentsController {
         contentService.savePage(contents.getContents());
         return new DataResponse(ResponseCode.SUCCESS.getCode(), "保存页面成功", null);
     }
-
+    /**
+     * deleteContent   删除页面或者页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/admin/delete/content")
+    public DataResponse deleteContent(@RequestBody int cid) {
+        contentService.deletePostOrPage(cid);
+        return new DataResponse(ResponseCode.SUCCESS.getCode(), "删除页面或者页面成功", null);
+    }
+    /**
+     * deleteContent   批量删除页面或者页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/admin/delete/contents")
+    public DataResponse deleteMultipleContents(@RequestBody List<Integer> clist) {
+        for(int cid:clist){
+            contentService.deletePostOrPage(cid);
+        }
+        return new DataResponse(ResponseCode.SUCCESS.getCode(), "批量删除页面或者页面成功", null);
+    }
 }

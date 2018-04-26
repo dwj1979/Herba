@@ -235,4 +235,22 @@ public class ContentService {
             e.printStackTrace();
         }
     }
+    /**
+     * deletePostOrPage  删除页面
+     *
+     * @param cid 页面信息
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void deletePostOrPage(int cid) {
+        try {
+            comtentsMapper.deleteByPrimaryKey(cid);
+            List<Relationships> relationshipsList =new ArrayList<>();
+            relationshipsList = relationshipsMapper.selectListByCid(cid);
+            if(relationshipsList.size()>0){
+                relationshipsMapper.deleteByPrimaryKey(cid);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

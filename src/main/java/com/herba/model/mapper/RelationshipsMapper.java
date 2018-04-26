@@ -18,4 +18,6 @@ public interface RelationshipsMapper {
     int updateCategoryByPrimaryKey(Relationships relationships);
 
     int deleteTagMultiple(List<Relationships> relationships);
+
+    List<Relationships> selectListByCid(int cid);
 }
